@@ -1,6 +1,5 @@
 #!/bin/sh
-# simple script to set brightness with notification
-# requires notify-send.sh to replace notifications
+# simple script to set brightness with notifications
 
 if [ "$1" = "+" ]; then
     xbacklight + "$2" 

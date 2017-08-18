@@ -51,6 +51,7 @@ alias lidignore="systemd-inhibit --what=handle-lid-switch sleep 66d"
 alias sspace="sshuttle -r cat@ckat.space 0/0 --dns || sshuttle -r cat@ckat.space 0/0 --dns" 
 alias regrub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias :q="exit"
+alias cp="cp -i"
 
 wttr() { curl wttr.in/"$1" }
 mpvyt() { mpv ytdl://ytsearch66:"$*" }
