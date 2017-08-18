@@ -1,3 +1,7 @@
 **/*.log
 .weechat/irc.conf
 .weechat/logs/*
+**/*.swo
+**/*.swp
+**/*.un
+**/*.*~
