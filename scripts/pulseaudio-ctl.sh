@@ -1,0 +1,338 @@
+#!/bin/bash
+#
+# pulseaudio-ctl
+#
+# simple control of pulseaudio vol+/vol-/mute from the shell
+# or more practically, from DE shortcut keys
+#
+# by graysky
+# https://github.com/graysky2/pulseaudio-ctl
+#
+# edited by Ckat to use notify-send.sh for persistant notifcations
+
+VERS="1.64"
+SKEL="/usr/share/pulseaudio-ctl/config.skel"
+CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/pulseaudio-ctl/config"
+
+BLD="\e[01m"
+BLU="\e[01;34m"
+RED="\e[01;31m"
+NRM="\e[00m"
+GRN="\e[01;32m"
+
+command -v sed >/dev/null 2>&1 || {
+echo "I require sed but it's not installed. Aborting." >&2
+exit 1; }
+
+command -v awk >/dev/null 2>&1 || {
+echo "I require awk but it's not installed. Aborting." >&2
+exit 1; }
+
+command -v pactl >/dev/null 2>&1 || {
+echo "I require pactl but it's not installed. Aborting." >&2
+exit 1; }
+
+command -v pacmd >/dev/null 2>&1 || {
+echo "I require pacmd but it's not installed. Aborting." >&2
+exit 1; }
+
+# really crude pactl version check since commands are different for different
+# versions of pactl. sorry users of PA <5
+PAVERSION=$(pactl --version | grep pactl | sed 's/^pactl //')
+if [[ ${PAVERSION%%.*} -lt 5 ]]; then
+  PCV=0
+elif [[ 1 -eq "$(echo "${PAVERSION} > 5.1" | bc)" ]]; then
+  # version is upstream 5.99.2 or higher
+  PCV=2
+elif [[ 1 -eq "$(echo "${PAVERSION} < 5.1" | bc)" ]]; then
+  # version is upstream 5.0
+  PCV=1
+fi
+
+# stop if the above failed to set a value for PCV
+if [[ -z $PCV ]]; then
+  echo -e ${BLD}"Cannot determine which version of pactl is installed. ${RED}Aborting."${NRM}
+  exit 1
+fi
+
+is_integer() {
+  if [[ "$1" =~ ^[0-9]+$ ]]; then
+    echo 1;
+  else
+    echo 0;
+  fi
+}
+
+makeconfig() {
+  if [[ ! -f "$SKEL" ]]; then
+    echo -e "${RED}$SKEL is missing. Reinstall this package to continue."${NRM}
+    exit 1
+  fi
+
+  if [[ ! -f "$CONFIG" ]]; then
+    echo -e ${BLD}'------------------------------------------------------------'${NRM}
+    echo -e ${BLD}' No config file found so creating a fresh one in:'${NRM}
+    echo -e ${BLD}${BLU}" $CONFIG"${NRM}
+    echo
+    echo -e ${BLD}" Edit this file if desired."${NRM}
+    echo -e ${BLD}'------------------------------------------------------------'${NRM}
+    install -Dm644 "$SKEL" "$CONFIG"
+  fi
+}
+
+checkconfig() {
+  if [[ ! -f "$CONFIG" ]]; then
+    makeconfig
+  else
+    source "$CONFIG"
+    if [[ -n "$UPPER_THRESHOLD" ]]; then
+      [[ $(is_integer "$UPPER_THRESHOLD") == '1' ]] || UPPER_THRESHOLD=100
+    else
+      UPPER_THRESHOLD=100
+    fi
+  fi
+
+  case "${NOTIFY,,}" in
+    y|yes|true|t|on|1|enabled|enable|use)
+      USEN=1
+      command -v notify-send >/dev/null 2>&1 || {
+      echo "You wish to use notifications but I require notify-send but it's not installed." >&2
+      echo "Modify $CONFIG or install the package that provides it. Aborting." >&2
+      exit 1; }
+      ;;
+    *)
+      USEN=0
+      ;;
+  esac
+  
+  case "${BARCHART,,}" in
+    y|yes|true|t|on|1|enabled|enable|use)
+      USEB=1
+      ;;
+    *)
+      USEB=0
+      ;;
+  esac
+
+  case "${KDE_OSD,,}" in
+    y|yes|true|t|on|1|enabled|enable|use)
+      USEK=1
+      command -v dbus-send >/dev/null 2>&1 || {
+      echo "You wish to use KDE OSD notifications but I require dbus-send but it's not installed." >&2
+      echo "Modify $CONFIG or install the package that provides it. Aborting." >&2
+      exit 1; }
+      ;;
+    *)
+      USEK=0
+      ;;
+  esac
+
+}
+
+refreshcurvol() {
+  # this worked some versions of PA 4 but is no longer valid with v5
+  # CURVOL=$(pacmd list-sinks|grep -A 15 '* index'| awk '/base volume: /{ print $5 }'|sed 's/%//')
+  [[ $PCV -eq 0 ]] && 
+  CURVOL=$(pacmd list-sinks|grep -A 15 '* index'| awk '/volume: /{ print $3 }' | grep -m 1 % |sed 's/[%|,]//g') ||
+    CURVOL=$(pacmd list-sinks|grep -A 15 '* index'| awk '/volume: front/{ print $5 }' | sed 's/[%|,]//g')
+}
+
+refreshsrcvol() {
+  # this worked some versions of PA 4 but is no longer valid with v5
+  # SRCVOL=$(pacmd list-sources|grep -A 15 '* index'| awk '/base volume: /{ print $5 }'|sed 's/%//')
+  [[ $PCV -eq 0 ]] &&
+  SRCVOL=$(pacmd list-sources|grep -A 15 '* index'| awk '/volume: /{ print $3 }' | grep -m 1 % |sed 's/[%|,]//g') ||
+    SRCVOL=$(pacmd list-sources|grep -A 15 '* index'| awk '/volume: front/{ print $5 }' | sed 's/[%|,]//g')
+}
+
+refreshbarvolperc() {
+  # calculates the volume percentage based on UPPER_THRESHOLD
+  # for proper display in the bar
+  UPPER_THRESHOLD_AWARE_VOL=$CURVOL*100/$UPPER_THRESHOLD
+}
+
+setup() {
+  SINK=$(pacmd list-sinks|awk '/\* index:/{ print $3 }')
+  SOURCE=$(pacmd list-sources|awk '/\* index:/{ print $3 }')
+  MUTED=$(pacmd list-sinks|grep -A 15 '* index'|awk '/muted:/{ print $2 }')
+  SOURCE_MUTED=$(pacmd list-sources|grep -A 15 '* index'|awk '/muted:/{ print $2 }')
+  
+  refreshcurvol # sets CURVOL ahead of integer check
+
+  # check that extracted vars are integers
+  declare -A VARS_TO_CHECK
+  VARS_TO_CHECK=([SINK]="default sink" [SOURCE]="default source" [CURVOL]="current volume")
+  for v in "${!VARS_TO_CHECK[@]}"; do
+    if [[ -n "${!v}" ]]; then
+      [[ $(is_integer "${!v}") == '1' ]] || echo -e "${RED}Cannot determine ${VARS_TO_CHECK[$v]}."${NRM}
+    else
+      return 0
+    fi
+  done
+}
+
+kde_osd() {
+  dbus-send --session --dest="org.freedesktop.Notifications" --type="method_call" "/org/kde/osdService" "org.kde.osdService.volumeChanged" "int32:$1"
+}
+
+kde_osd_mic() {
+  dbus-send --session --dest="org.freedesktop.Notifications" --type="method_call" "/org/kde/osdService" "org.kde.osdService.mediaPlayerVolumeChanged" "int32:$1" "string:" "string:audio-input-microphone"
+}
+
+checkconfig
+setup
+# checks if exist a valid $2 
+PERC=5
+[[ -n "$2" ]] && [[ $(is_integer "${2%%%}") == '1' ]] && PERC=${2%%%} 
+
+case "$1" in
+  U|u|[U,u]p)
+    # raise volume by $PERC % or set it to the upper threshold
+    # in cases where external apps have pushed it above
+    [[ "$(( $PERC + $CURVOL ))" -gt "$UPPER_THRESHOLD" ]] && PERC="$(( $UPPER_THRESHOLD - $CURVOL ))"
+    [[ "$CURVOL" -ge $UPPER_THRESHOLD ]] && pactl set-sink-volume "$SINK" $UPPER_THRESHOLD% ||
+      case "$PCV" in
+          0|1) pactl set-sink-volume "$SINK" -- +$PERC% ;;
+          2) pactl set-sink-volume "$SINK" +$PERC% ;;
+      esac
+
+    refreshcurvol
+    refreshbarvolperc
+    if [[ $USEN -eq 1 ]]; then
+      [[ $USEB -eq 1 ]] &&
+        notify-send.sh -r 5 -i multimedia-volume-control --hint=int:transient:1 --hint=int:value:$UPPER_THRESHOLD_AWARE_VOL --hint=string:synchronous:volume "Volume up $PERC %" "" ||
+        notify-send.sh -r 5 --hint=int:transient:1 "Volume up $PERC%" "Current is $CURVOL %" --icon=multimedia-volume-control
+    fi
+    [[ $USEK -eq 1 ]] &&
+      kde_osd $CURVOL
+    ;;
+  D|d|[D,d]own|[D,d]o)
+    # lowers volume by $PERC %
+    [[ "$PERC" -gt "$CURVOL" ]] && PERC="$CURVOL"
+    [[ "$CURVOL" -le 0 ]] && exit 0 ||
+      case "$PCV" in
+        0|1) pactl set-sink-volume "$SINK" -- -$PERC% ;;
+        2) pactl set-sink-volume "$SINK" -$PERC% ;;
+      esac
+    refreshcurvol
+    refreshbarvolperc
+    if [[ $USEN -eq 1 ]]; then
+      [[ $USEB -eq 1 ]] &&
+        notify-send.sh -r 5 -i multimedia-volume-control --hint=int:transient:1 --hint=int:value:$UPPER_THRESHOLD_AWARE_VOL --hint=string:synchronous:volume "Volume down $PERC %" "" ||
+        notify-send.sh -r 5 --hint=int:transient:1 "Volume down $PERC%" "Current is $CURVOL %" --icon=multimedia-volume-control
+    fi
+    [[ $USEK -eq 1 ]] &&
+      kde_osd $CURVOL
+    ;;
+  M|m|[M,m]u|[M,m]ute)
+    # mutes/unmutes the volume entirely
+    NEW_MUTE=toggle
+    if [[ $2 == 'no' || $2 == 'yes' || $2 == 'toggle' ]]; then
+      NEW_MUTE="$2"
+    fi
+    pactl set-sink-mute "$SINK" "$NEW_MUTE"
+    MUTED=$(pacmd list-sinks|grep -A 15 '* index'|awk '/muted:/{ print $2 }')
+    [[ $USEN -eq 1 ]] &&
+      notify-send.sh -r 5 --hint=int:transient:1 "Mute toggle" "Muted: $MUTED" --icon=audio-volume-muted
+    if [[ $USEK -eq 1 ]]; then
+      if [[ $MUTED == "yes" ]]; then
+        kde_osd 0
+      else
+        refreshcurvol
+        kde_osd $CURVOL
+      fi
+    fi
+    ;;
+  [M,m]i|[M,m]ute-[I,i]nput)
+    # mutes/umutes the microphone entirely
+    NEW_MUTE=toggle
+    if [[ $2 == 'no' || $2 == 'yes' || $2 == 'toggle' ]]; then
+      NEW_MUTE="$2"
+    fi
+    pactl set-source-mute "$SOURCE" "$NEW_MUTE"
+    SOURCE_MUTED=$(pacmd list-sources|grep -A 15 '* index'|awk '/muted:/{ print $2 }')
+    [[ $USEN -eq 1 ]] &&
+      notify-send.sh -r 5 --hint=int:transient:1 "Mute toggle" "Muted: $SOURCE_MUTED" --icon=audio-volume-muted
+    if [[ $USEK -eq 1 ]]; then
+      if [[ $SOURCE_MUTED == "yes" ]]; then
+        kde_osd_mic 0
+      else
+        refreshsrcvol
+        kde_osd_mic $SRCVOL
+      fi
+    fi
+    ;;
+  set)
+    NEWVOL="${2%%%}"
+    [[ "$NEWVOL" -gt $UPPER_THRESHOLD ]] && exit 0 ||
+      [[ "$NEWVOL" -le 0 ]] && exit 0 ||
+      case "$PCV" in
+        0|1) pactl set-sink-volume "$SINK" -- $NEWVOL% ;;
+        2) pactl set-sink-volume "$SINK" $NEWVOL% ;;
+      esac
+    refreshcurvol
+    [[ $USEN -eq 1 ]] &&
+      notify-send.sh -r 5 --hint=int:transient:1 "Volume set" "Level: $CURVOL" --icon=multimedia-volume-control
+    [[ $USEK -eq 1 ]] &&
+      kde_osd $CURVOL
+    ;;
+  atmost)
+    NEWVOL="${2%%%}"
+    [[ "$CURVOL" -le "$NEWVOL" ]] && exit 0 ||
+      [[ "$NEWVOL" -ge $UPPER_THRESHOLD ]] && exit 0 ||
+      [[ "$NEWVOL" -le 0 ]] && exit 0 ||
+      case "$PCV" in
+        0|1) pactl set-sink-volume "$SINK" -- $NEWVOL% ;;
+        2) pactl set-sink-volume "$SINK" $NEWVOL% ;;
+      esac
+    refreshcurvol
+    [[ $USEN -eq 1 ]] &&
+      notify-send.sh -r 5 --hint=int:transient:1 "Atmost set" "Level: $CURVOL" --icon=multimedia-volume-control
+    [[ $USEK -eq 1 ]] &&
+      kde_osd $CURVOL
+    ;;
+  C|c|[C,c]urrent)
+    # useful only for scripting
+    echo $CURVOL%
+    ;;
+  [F,f]s|[F,f]ull-[S,s]tatus)
+    # useful for scripting.
+    # returns current volume and sink and source mute state
+    echo $CURVOL $MUTED $SOURCE_MUTED
+    ;;
+  *)
+    # send to notify-send if enabled
+    [[ $USEN -eq 1 ]] &&
+      notify-send -t 8000 --hint=int:transient:1 "Pulseaudio Settings" "Volume level     : $CURVOL %\nIs sink muted    : $MUTED\nIs source muted  : $SOURCE_MUTED\nDetected sink    : $SINK\nDetected source  : $SOURCE\nPulse version    : $PAVERSION" --icon=multimedia-volume-control
+    # add pretty colors for mute status for CLI only
+    [[ "$MUTED" = "yes" ]] && MUTED="${NRM}${RED}$MUTED${NRM}" ||
+      MUTED="${NRM}${GRN}$MUTED${NRM}"
+    [[ "$SOURCE_MUTED" = "yes" ]] && SOURCE_MUTED="${NRM}${RED}$SOURCE_MUTED${NRM}" ||
+      SOURCE_MUTED="${NRM}${GRN}$SOURCE_MUTED${NRM}"
+
+    echo -e "${BLD}pulseaudio-ctl v$VERS${NRM}"
+    echo
+    echo -e " ${BLD}$0 ${NRM}${BLU}{up,down,mute,mute-input,set,atmost,full-status}${NRM} [n]"
+    echo
+    echo -e " ${BLD}Where ${NRM}${BLU}up${NRM}${BLD} and ${NRM}${BLU}down${NRM}${BLD} adjust volume in ±5 % increments${NRM}"
+    echo -e " ${BLD}Where ${NRM}${BLU}up${NRM}${BLD} and ${NRM}${BLU}down${NRM}${BLD} [n] adjust volume in ±n % increments${NRM}"
+    echo -e " ${BLD}Where ${NRM}${BLU}mute${NRM}${BLD} toggles the mute status on/off${NRM}"
+    echo -e " ${BLD}Where ${NRM}${BLU}mute-input${NRM}${BLD} toggles the input status on/off${NRM}"
+    echo -e " ${BLD}Where ${NRM}${BLU}set${NRM}${BLD} set the volume to [n] %${NRM}"
+    echo -e " ${BLD}Where ${NRM}${BLU}atmost${NRM}${BLD} only takes effect if current volume is higher than [n]${NRM}"
+    echo -e " ${BLD}Where ${NRM}${BLU}full-status${NRM}${BLD} prints volume level, sink and source mute state to stdout${NRM}"
+    echo
+    echo -e " ${BLD}Optionally, redefine an upper threshold in ${NRM}${BLU}$CONFIG${NRM}"
+    echo
+    echo -e " ${BLD}Volume level     : ${NRM}${RED}$CURVOL %${NRM}"
+    echo -e " ${BLD}Is sink muted    : $MUTED"
+    echo -e " ${BLD}Is source muted  : $SOURCE_MUTED"
+    echo -e " ${BLD}Detected sink    : ${NRM}${BLU}$SINK${NRM}"
+    echo -e " ${BLD}Detected source  : ${NRM}${BLU}$SOURCE${NRM}"
+    echo -e " ${BLD}Pulse version    : ${NRM}${BLU}$PAVERSION${NRM}"
+    ;;
+esac
+
+exit 0
+
+# vim:set ts=8 sts=2 sw=2 et:

@@ -1,0 +1,10 @@
+[dmenu]
+fn = dina:size=8
+nb = __BG
+nf = __SECFG
+sb = __SECBG
+sf = __FG
+
+[editor]
+terminal = urxvt
+gui_if_available = False
