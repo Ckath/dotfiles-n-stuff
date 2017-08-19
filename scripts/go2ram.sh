@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # move temp folders to ram
 
 rm -rf /home/cat/.thumbnails /home/cat/.cache

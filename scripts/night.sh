@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # toggle for dim night setup with notifications
 
 if cat /tmp/BRIGHTNESS 2> /dev/null; then

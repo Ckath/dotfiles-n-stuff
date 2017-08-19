@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # simple script to set brightness with notifications
 
 if [ "$1" = "+" ]; then

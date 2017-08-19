@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # recolor a bunch of applications based on .Xresources colorscheme
 
 # recolor terminal

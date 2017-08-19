@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # this gets executed at system start
 
 /home/cat/scripts/go2ram.sh

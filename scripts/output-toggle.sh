@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # toggle for hdmi/internal audio with notifications
 
 if cat /tmp/HDMI_TOGGLE 2> /dev/null; then

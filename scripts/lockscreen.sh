@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # config for i3lock colors, 
 # with pixelated/distored background screenshot
 

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # screen blanking toggle with notifications
 
 if [ "$1" = "-off" ]; then
