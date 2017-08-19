@@ -18,6 +18,8 @@ setopt INC_APPEND_HISTORY
 source /home/cat/.zsh/mh.zsh
 # History Substring Search
 source /home/cat/.zsh/zsh-history-substring-search.zsh
+# Set term title correctly
+source /home/cat/.zsh/termsupport.zsh
 
 # Vi Binds
 bindkey -v
