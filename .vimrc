@@ -22,7 +22,6 @@ if dein#load_state('/home/cat/.vim')
     call dein#add('bling/vim-airline')
     call dein#add('vim-airline/vim-airline-themes')
     call dein#add('scrooloose/nerdtree')
-    call dein#add('neomake/neomake')
     call dein#add('tpope/vim-repeat')
     call dein#add('tpope/vim-surround')
     call dein#add('tpope/vim-commentary')
@@ -30,18 +29,16 @@ if dein#load_state('/home/cat/.vim')
     call dein#add('chrisbra/Recover.vim')
     call dein#add('junegunn/vim-easy-align')
     call dein#add('kana/vim-textobj-user')
-    call dein#add('kana/vim-textobj-entire')
-    call dein#add('kana/vim-textobj-line')
     call dein#add('jceb/vim-textobj-uri')
     call dein#add('glts/vim-textobj-comment')
-    call dein#add('RussellBradley/vim-spurs-away')
-    call dein#add('zandrmartin/vim-distill')
     call dein#add('vimwiki/vimwiki')
     call dein#add('sjl/gundo.vim')
     call dein#add('jebaum/vim-tmuxify')
     call dein#add('lervag/vimtex')
-    call dein#add('zaki/zazen')
     call dein#add('chrisduerr/vim-undead')
+    call dein#add('vim-scripts/taglist.vim')
+    call dein#add('svermeulen/vim-extended-ft')
+    call dein#add('w0rp/ale')
 
   " Required:
   call dein#end()
@@ -88,7 +85,9 @@ nnoremap <leader>l :bnext<cr>
 nnoremap <leader>h :bprevious<cr>
 nnoremap <leader>W :w !sudo tee % > /dev/null<cr>
 nnoremap <leader>n :NERDTreeToggle<cr>
-nnoremap <leader>mt :!ctags -R .<cr>
+nnoremap <leader>t :TlistToggle<cr>
+nnoremap <leader>mt :TlistAddFilesRecursive .<cr>
+nnoremap <leader>ut :TlistHighlightTag<cr>
 nnoremap <leader>u :GundoToggle<cr>
 nnoremap <leader>w :exec &list==1? "set nolist" : "set list"<cr>
 nnoremap <leader>ss :exec &spell==1? "set nospell" : "set spell"<cr>
@@ -176,8 +175,6 @@ if &t_Co > 2 || has("gui_running")
     set hlsearch
 endif
 
-autocmd! BufWritePost * Neomake
-" Put these in an autocmd group, so that we can delete them easily.
 augroup vimrcEx
 au!
 
@@ -301,6 +298,15 @@ let g:tmuxify_run = {
 
 " Vimtex Settings
 let g:vimtex_view_method = 'zathura'
+
+" ALE Settings
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+let g:ale_linters = {
+    \   'c': ['gcc', 'cppcheck'],
+    \   'cpp': ['gcc', 'cppcheck'],
+    \}
 
 " Unfuck/reapply colors under ssh connection
 if $SSH_CONNECTION
