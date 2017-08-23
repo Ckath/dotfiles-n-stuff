@@ -18,7 +18,7 @@ git_dirty() {
 }
 git_prompt_info() {
     if [ -d .git ]; then
-        echo '%F{yellow}%B'$(git symbolic-ref HEAD 2> /dev/null | cut -d'/' -f3-)$(git_dirty)
+        echo '%F{yellow}%B'$((git symbolic-ref HEAD 2> /dev/null || git rev-parse --short HEAD) | cut -d'/' -f3-)$(git_dirty)
     fi
 }
 
