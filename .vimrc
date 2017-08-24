@@ -85,7 +85,7 @@ nnoremap <leader>h :bprevious<cr>
 nnoremap <leader>W :w !sudo tee % > /dev/null<cr>
 nnoremap <leader>n :NERDTreeToggle<cr>
 nnoremap <leader>t :TlistToggle<cr>
-nnoremap <leader>mt :TlistAddFilesRecursive .<cr>
+nnoremap <leader>af :TlistAddFilesRecursive .<cr>
 nnoremap <leader>ut :TlistHighlightTag<cr>
 nnoremap <leader>u :GundoToggle<cr>
 nnoremap <leader>w :exec &list==1? "set nolist" : "set list"<cr>
