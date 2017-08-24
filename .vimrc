@@ -20,7 +20,6 @@ if dein#load_state('/home/cat/.vim')
     call dein#add('racer-rust/vim-racer')
     call dein#add('airblade/vim-gitgutter')
     call dein#add('bling/vim-airline')
-    call dein#add('vim-airline/vim-airline-themes')
     call dein#add('scrooloose/nerdtree')
     call dein#add('tpope/vim-repeat')
     call dein#add('tpope/vim-surround')
@@ -35,10 +34,10 @@ if dein#load_state('/home/cat/.vim')
     call dein#add('sjl/gundo.vim')
     call dein#add('jebaum/vim-tmuxify')
     call dein#add('lervag/vimtex')
-    call dein#add('chrisduerr/vim-undead')
     call dein#add('vim-scripts/taglist.vim')
     call dein#add('svermeulen/vim-extended-ft')
     call dein#add('w0rp/ale')
+    call dein#add('Ckath/vim-cate')
 
   " Required:
   call dein#end()
@@ -202,29 +201,7 @@ if !exists(":DiffOrig")
 endif
 
 " Highlighting/color
-set t_Co=256
-colorscheme undead
-hi Normal ctermbg=NONE ctermfg=7
-hi String ctermfg=15
-hi Search ctermbg=7 ctermfg=0 cterm=bold term=none
-hi IncSearch ctermbg=7 ctermfg=0 cterm=bold term=none
-hi Visual ctermfg=0 ctermbg=7 cterm=NONE
-hi VertSplit ctermfg=7 ctermbg=8 cterm=NONE
-hi LineNr ctermfg=8 ctermbg=NONE cterm=NONE
-hi CursorLineNr ctermfg=red ctermbg=NONE
-hi NonText ctermbg=NONE
-hi Constant ctermbg=NONE
-hi WildMenu ctermbg=8 ctermfg=red cterm=bold
-hi StatusLine ctermbg=8 ctermfg=7 cterm=none term=none
-hi StatusLineNC ctermfg=15 ctermbg=0 cterm=none term=none
-hi ModeMsg ctermbg=NONE
-hi MoreMsg ctermbg=NONE
-hi Pmenu ctermbg=NONE
-hi PmenuSel ctermbg=NONE ctermfg=red cterm=bold
-hi SpellBad ctermfg=0
-hi SpellCap ctermfg=0
-hi SpellLocal ctermfg=0
-hi SpellRare ctermfg=0
+colorscheme undeadcate
 
 " Indenting
 set ai
@@ -259,7 +236,7 @@ let g:clang_conceal_snippets=1
 let g:clang_snippets_engine='clang_complete'
 
 " Airline Settings
-let g:airline_theme = 'monochrome'
+let g:airline_theme = 'monocate'
 
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
@@ -307,28 +284,3 @@ let g:ale_linters = {
     \   'c': ['gcc', 'cppcheck'],
     \   'cpp': ['gcc', 'cppcheck'],
     \}
-
-" Unfuck/reapply colors under ssh connection
-if $SSH_CONNECTION
-    autocmd Colorscheme * hi Normal ctermbg=NONE ctermfg=7
-    autocmd Colorscheme * hi String ctermfg=15
-    autocmd Colorscheme * hi Search ctermbg=15 ctermfg=0 cterm=bold term=none
-    autocmd Colorscheme * hi IncSearch ctermbg=15 ctermfg=0 cterm=bold term=none
-    autocmd Colorscheme * hi Visual ctermfg=0 ctermbg=7 cterm=NONE
-    autocmd Colorscheme * hi VertSplit ctermfg=7 ctermbg=8 cterm=NONE
-    autocmd Colorscheme * hi LineNr ctermfg=8 ctermbg=NONE cterm=NONE
-    autocmd Colorscheme * hi CursorLineNr ctermfg=red ctermbg=NONE
-    autocmd Colorscheme * hi NonText ctermbg=NONE
-    autocmd Colorscheme * hi Constant ctermbg=NONE
-    autocmd Colorscheme * hi WildMenu ctermbg=8 ctermfg=red cterm=bold
-    autocmd Colorscheme * hi StatusLine ctermbg=8 ctermfg=7 cterm=none term=none
-    autocmd Colorscheme * hi StatusLineNC ctermfg=15 ctermbg=0 cterm=none term=none
-    autocmd Colorscheme * hi ModeMsg ctermbg=NONE
-    autocmd Colorscheme * hi MoreMsg ctermbg=NONE
-    autocmd Colorscheme * hi Pmenu ctermbg=NONE
-    autocmd Colorscheme * hi PmenuSel ctermbg=NONE ctermfg=red cterm=bold
-    autocmd Colorscheme * hi SpellBad ctermfg=0
-    autocmd Colorscheme * hi SpellCap ctermfg=0
-    autocmd Colorscheme * hi SpellLocal ctermfg=0
-    autocmd Colorscheme * hi SpellRare ctermfg=0
-endif
