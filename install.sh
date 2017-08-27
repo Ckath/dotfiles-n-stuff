@@ -22,6 +22,7 @@ if [ "$1" != "--server" ] && [ "$1" != "--vps" ]; then
     rm -rf ~/scripts 2> /dev/null
     ln -sfv "$DOT_DIR"/.Xresources \
         "$DOT_DIR"/.xmodmap \
+        "$DOT_DIR"/.xinitrc \
         "$DOT_DIR"/scripts ~/
     ln -sfv "$DOT_DIR"/.weechat/* ~/.weechat
 
