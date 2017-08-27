@@ -2,7 +2,8 @@
 # basic upload script, copy to clipboard or upload
 
 if [[ "$1" = "-c" ]]; then
-    maim -s -u | xclip -selection clipboard -t image/png
+    (maim -s -u || (notify-send "upload canceled" -t 10 ; pkill "$(basename "$0")"))\
+        | xclip -selection clipboard -t image/png
     notify-send "image copied to clipboard" -t 10
     exit 0
 fi
