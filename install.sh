@@ -26,14 +26,12 @@ if [ "$1" != "--server" ] && [ "$1" != "--vps" ]; then
         "$DOT_DIR"/scripts ~/
     ln -sfv "$DOT_DIR"/.weechat/* ~/.weechat
 
-    mkdir ~/.config 2> /dev/null
+    mkdir -p ~/.config/ranger \
+        ~/.config/dunst \
+        ~/.config/networkmanager-dmenu 2> /dev/null
     ln -sfv "$DOT_DIR"/.config/TrollTech.conf ~/.config
-    mkdir ~/.config/ranger 2> /dev/null
     ln -sfv "$DOT_DIR"/.config/ranger/* ~/.config/ranger
-    mkdir ~/.config/networkmanager-dmenu 2> /dev/null
-    ln -sfv "$DOT_DIR"/.config/networkmanager-dmenu/* ~/.config/networkmanager-dmenu
     mkdir ~/.config/mpv 2> /dev/null || rm -rf ~/.config/mpv/scripts
     ln -sfv "$DOT_DIR"/.config/mpv/* ~/.config/mpv
-    mkdir ~/.config/dunst 2> /dev/null
-    ln -sfv "$DOT_DIR"/.config/dunst/* ~/.config/dunst
+    ~/scripts/recolor.sh -f
 fi
