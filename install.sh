@@ -10,6 +10,8 @@ fi
 shopt -s dotglob
 DOT_DIR="$(pwd)"
 
+git grep -l "/home/cat" | xargs sed -i "s:/home/cat:$(echo ~):g"
+
 rm -rf ~/.zsh 2> /dev/null
 ln -sfv "$DOT_DIR"/.vimrc \
     "$DOT_DIR"/.tmux.conf \

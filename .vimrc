@@ -4,15 +4,15 @@ if &compatible
 endif
 
 " Required:
-set runtimepath+=/home/cat/.vim/repos/github.com/Shougo/dein.vim
+set runtimepath+=~/.vim/repos/github.com/Shougo/dein.vim
 
 " Required:
-if dein#load_state('/home/cat/.vim')
-  call dein#begin('/home/cat/.vim')
+if dein#load_state('~/.vim')
+  call dein#begin('~/.vim')
 
   " Let dein manage dein
   " Required:
-  call dein#add('/home/cat/.vim/repos/github.com/Shougo/dein.vim')
+  call dein#add('~/.vim/repos/github.com/Shougo/dein.vim')
 
   " Add or remove your plugins here:
     call dein#add('Rip-Rip/clang_complete')
@@ -35,7 +35,6 @@ if dein#load_state('/home/cat/.vim')
     call dein#add('jebaum/vim-tmuxify')
     call dein#add('lervag/vimtex')
     call dein#add('vim-scripts/taglist.vim')
-    call dein#add('svermeulen/vim-extended-ft')
     call dein#add('w0rp/ale')
     call dein#add('Ckath/vim-cate')
 
