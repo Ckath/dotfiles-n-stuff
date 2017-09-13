@@ -12,8 +12,9 @@ fi
 
 # exec i3
 # wm loop
+printf  "session started: %s\n" "$(date)" > ~/.dwm.log
 while true; do
-    dwm 2> ~/.dwm.log
-    cp ~/.dwm.log ~/.dwm.log_last
+    dwm 2>> ~/.dwm.log
+    printf  "\nrestart: %s\n" "$(date)" >> ~/.dwm.log
 done
 
