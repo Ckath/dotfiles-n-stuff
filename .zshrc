@@ -47,7 +47,7 @@ alias ucosInit="wineconsole ~/School/uCos-MinGW/msys.bat ;\
     cd ~/School/uCos-MinGW/uCOS-II/Ports/80x86/WIN32/GCC-MINGW/labs"
 alias vncShare="x0vncserver -display :0 -passwordfile ~/.vnc/passwd"
 alias addkey="gpg --keyserver hkp://pgp.mit.edu --recv-keys"
-alias tangleroadssh="ssh -p 5013 ckat@trds.acr.moe"
+alias tangleroadssh="ssh -p 5013 ckat@my.9624.cloud"
 alias pacccache="paccache -rk2 ; paccache -ruk0"
 alias lidignore="systemd-inhibit --what=handle-lid-switch sleep 66d"
 alias sspace="sshuttle -r cat@ckat.space 0/0 --dns || sshuttle -r cat@ckat.space 0/0 --dns" 

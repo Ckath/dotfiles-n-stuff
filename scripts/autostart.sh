@@ -4,7 +4,7 @@
 /home/cat/scripts/go2ram.sh
 xrdb -merge ~/.Xresources
 urxvtd&
-slstatus -d
+sstat -d
 snotif -d
 synclient TapButton1=1 HorizTwoFingerScroll=1 PalmDetect=1
 compton -b
