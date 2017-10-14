@@ -31,7 +31,7 @@ if [ "$1" != "--server" ] && [ "$1" != "--vps" ]; then
     mkdir -p ~/.config/ranger \
         ~/.config/dunst \
         ~/.config/networkmanager-dmenu 2> /dev/null
-    ln -sfv "$DOT_DIR"/.config/TrollTech.conf ~/.config
+    ln -sfv "$DOT_DIR"/.config/Trolltech.conf ~/.config
     ln -sfv "$DOT_DIR"/.config/ranger/* ~/.config/ranger
     mkdir ~/.config/mpv 2> /dev/null || rm -rf ~/.config/mpv/scripts
     ln -sfv "$DOT_DIR"/.config/mpv/* ~/.config/mpv

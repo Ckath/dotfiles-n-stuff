@@ -49,7 +49,7 @@ alias vncShare="x0vncserver -display :0 -passwordfile ~/.vnc/passwd"
 alias addkey="gpg --keyserver hkp://pgp.mit.edu --recv-keys"
 alias tangleroadssh="ssh -p 5013 ckat@my.9624.cloud"
 alias pacccache="paccache -rk2 ; paccache -ruk0"
-alias lidignore="systemd-inhibit --what=handle-lid-switch sleep 66d"
+alias lidignore="systemd-inhibit --what=handle-lid-switch sleep 666d"
 alias sspace="sshuttle -r cat@ckat.space 0/0 --dns || sshuttle -r cat@ckat.space 0/0 --dns" 
 alias regrub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias :q="exit"
@@ -57,7 +57,7 @@ alias cp="cp -i"
 
 wttr() { curl wttr.in/"$1" }
 mpvyt() { mpv ytdl://ytsearch66:"$*" }
-mkcd() { mkdir "$1";cd "$1" }
+mkcd() { mkdir -p "$1";cd "$1" }
 
 
 dwm-remake() {
