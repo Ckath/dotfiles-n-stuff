@@ -95,6 +95,12 @@ nnoremap <leader>cc :call ToggleList("Quickfix List", 'c')<cr>
 nnoremap <leader>cn :cnext<cr>
 nnoremap <leader>cp :cprevious<cr>
 nnoremap <leader>r :so $MYVIMRC<cr>
+" Get rid of conflicting binds
+autocmd VimEnter * unmap <Leader>hp
+autocmd VimEnter * unmap <Leader>hr
+autocmd VimEnter * unmap <Leader>hs
+autocmd VimEnter * unmap <Leader>hu
+
 
 " C snips
 autocmd FileType c inoremap ;for for (int i = 0; i < xxx; ++i) {<cr>}<esc>kfxcw
