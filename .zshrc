@@ -58,7 +58,7 @@ alias cp="cp -i"
 wttr() { curl wttr.in/"$1" }
 mpvyt() { mpv ytdl://ytsearch66:"$*" }
 mkcd() { mkdir -p "$1";cd "$1" }
-
+bgcolor() { convert -size 100x100 xc:"$*" bg.png ; feh --bg-scale bg.png }
 
 dwm-remake() {
     ORGDIR="$(pwd)"
