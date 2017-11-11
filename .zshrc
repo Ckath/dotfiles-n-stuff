@@ -58,6 +58,7 @@ alias cp="cp -i"
 wttr() { curl wttr.in/"$1" }
 mpvyt() { mpv ytdl://ytsearch66:"$*" }
 mkcd() { mkdir -p "$1";cd "$1" }
+scanwlan() { sudo iwlist wlp3s0 scanning essid $1 }
 
 dwm-remake() {
     ORGDIR="$(pwd)"
