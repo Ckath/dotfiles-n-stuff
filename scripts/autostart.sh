@@ -11,3 +11,4 @@ compton -b
 wmname LG3D
 xmodmap /home/cat/.xmodmap
 ~/.fehbg
+xbanish -bt5000

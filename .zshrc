@@ -32,7 +32,7 @@ export KEYTIMEOUT=1
 # Alias | Functions
 alias mountCompaq="gio mount -a smb://COMPAQ/Torrents"
 alias mountWindows="sudo mkdir -p /run/media/cat/windows ; sudo mount /dev/sda2 /run/media/cat/windows"
-alias rangerme="mountCompaq ; ranger /run/user/1000/gvfs/smb-share:server=compaq,share=torrents/anime"
+alias rangerme="ranger /net/Torrents/anime/"
 alias remirrors="sudo chown cat:users /etc/pacman.d/mirrorlist;\
     sudo sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.pacnew;\
     sudo rankmirrors -n 6 /etc/pacman.d/mirrorlist.pacnew >! /etc/pacman.d/mirrorlist;\
@@ -54,6 +54,7 @@ alias sspace="sshuttle -r cat@ckat.space 0/0 --dns || sshuttle -r cat@ckat.space
 alias regrub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias :q="exit"
 alias cp="cp -i"
+alias encyb="scanwlan cyberia && nmcli con up id cyberia"
 
 wttr() { curl wttr.in/"$1" }
 mpvyt() { mpv ytdl://ytsearch66:"$*" }
