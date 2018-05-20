@@ -37,6 +37,7 @@ if dein#load_state('~/.vim')
     call dein#add('vim-scripts/taglist.vim')
     call dein#add('w0rp/ale')
     call dein#add('Ckath/vim-cate')
+    call dein#add('ericcurtin/CurtineIncSw.vim')
 
   " Required:
   call dein#end()
@@ -95,11 +96,11 @@ nnoremap <leader>cc :call ToggleList("Quickfix List", 'c')<cr>
 nnoremap <leader>cn :cnext<cr>
 nnoremap <leader>cp :cprevious<cr>
 nnoremap <leader>r :so $MYVIMRC<cr>
+nnoremap <leader>sw :call CurtineIncSw()<cr>
 " Get rid of conflicting binds
-autocmd VimEnter * unmap <Leader>hp
-autocmd VimEnter * unmap <Leader>hr
-autocmd VimEnter * unmap <Leader>hs
-autocmd VimEnter * unmap <Leader>hu
+" autocmd BufRead * unmap <buffer> <Leader>hp
+" autocmd BufRead * unmap <buffer> <Leader>hu
+" autocmd BufRead * unmap <buffer> <Leader>hs
 
 
 " C snips
@@ -108,7 +109,7 @@ autocmd FileType c inoremap ;while while () {<cr>}<esc>kf(a
 autocmd FileType c inoremap ;if if () {<cr>}<esc>kf(a
 autocmd FileType c inoremap ;el else {<cr>}<esc>ko
 autocmd FileType c inoremap ;pf printf("\n");<esc>2F"a
-autocmd FileType c inoremap ;main int<cr>main(int arc, char *argv[])<cr>{<cr>return 0;<cr>}<esc>3kwvi(
+autocmd FileType c inoremap ;main int<cr>main(int arg, char *argv[])<cr>{<cr>return 0;<cr>}<esc>3kwvi(
 autocmd FileType c inoremap ;inc #include <stdio.h><esc>T<vt.
 autocmd FileType c inoremap ;finf for (;;) {<cr>}<esc>O
 autocmd FileType c inoremap ;def #define 
@@ -289,3 +290,6 @@ let g:ale_linters = {
     \   'c': ['gcc', 'cppcheck'],
     \   'cpp': ['gcc', 'cppcheck'],
     \}
+
+" GitGutter
+let g:gitgutter_map_keys = 0
