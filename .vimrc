@@ -233,7 +233,9 @@ let g:clang_complete_macros=1
 let g:clang_complete_patterns=0
 let g:clang_close_preview=1
 let g:clang_memory_percent=70
-let g:clang_auto_select=1
+let g:clang_auto_select=2
+let g:clang_complete_auto=0
+let g:clang_omnicppcomplete_compliance=1
 set conceallevel=2
 set concealcursor=vin
 let g:clang_snippets=1
@@ -271,12 +273,13 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " Tmuxify Settings
+let g:tmuxify_global_maps = 1
 let g:tmuxify_custom_command = 'tmux split-window -d -l 15'
 let g:tmuxify_map_prefix = '<leader>m'
 let g:tmuxify_run = {
     \ 'sh': 'bash %',
     \ 'go': 'go build %',
-    \ 'c': 'make clean install',
+    \ 'c': 'make run',
     \}
 
 " Vimtex Settings

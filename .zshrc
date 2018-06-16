@@ -37,17 +37,9 @@ alias remirrors="sudo chown cat:users /etc/pacman.d/mirrorlist;\
     sudo sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.pacnew;\
     sudo rankmirrors -n 6 /etc/pacman.d/mirrorlist.pacnew >! /etc/pacman.d/mirrorlist;\
     cat /etc/pacman.d/mirrorlist"
-alias pacman="\pacaur"
-alias pacaur="\pacman"
-alias mic1sim="java -jar ~/School/Mic1MMV/bin/Mic1MMV_hr.jar"
 alias comport="ls /dev | grep ACM"
-alias quartus64="/opt/altera/16.0/quartus/bin/quartus --64bit"
-alias nios2="/opt/altera/16.0/nios2eds/bin/eclipse-nios2"
-alias ucosInit="wineconsole ~/School/uCos-MinGW/msys.bat ;\
-    cd ~/School/uCos-MinGW/uCOS-II/Ports/80x86/WIN32/GCC-MINGW/labs"
 alias vncShare="x0vncserver -display :0 -passwordfile ~/.vnc/passwd"
 alias addkey="gpg --keyserver hkp://pgp.mit.edu --recv-keys"
-alias tangleroadssh="ssh -p 5013 ckat@my.9624.cloud"
 alias pacccache="paccache -rk2 ; paccache -ruk0"
 alias lidignore="systemd-inhibit --what=handle-lid-switch sleep 666d"
 alias sspace="sshuttle -r cat@ckat.space 0/0 --dns || sshuttle -r cat@ckat.space 0/0 --dns" 
@@ -55,6 +47,7 @@ alias regrub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias :q="exit"
 alias cp="cp -i"
 alias encyb="scanwlan cyberia && nmcli con up id cyberia"
+alias pakkuscuffedgitupdate="pakku -S \$(pakku -Qq | grep \"\-git\") --needed"
 
 wttr() { curl wttr.in/"$1" }
 mpvyt() { mpv ytdl://ytsearch66:"$*" }
