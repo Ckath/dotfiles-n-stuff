@@ -47,7 +47,7 @@ alias regrub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias :q="exit"
 alias cp="cp -i"
 alias encyb="scanwlan cyberia && nmcli con up id cyberia"
-alias pakkuscuffedgitupdate="pakku -S \$(pakku -Qq | grep \"\-git\") --needed"
+alias pakkuscuffedgitupdate="pakku -S \$(pakku -Qq | grep \"\-git\")"
 
 wttr() { curl wttr.in/"$1" }
 mpvyt() { mpv ytdl://ytsearch66:"$*" }
