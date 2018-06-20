@@ -97,11 +97,9 @@ nnoremap <leader>cn :cnext<cr>
 nnoremap <leader>cp :cprevious<cr>
 nnoremap <leader>r :so $MYVIMRC<cr>
 nnoremap <leader>sw :call CurtineIncSw()<cr>
-" Get rid of conflicting binds
-" autocmd BufRead * unmap <buffer> <Leader>hp
-" autocmd BufRead * unmap <buffer> <Leader>hu
-" autocmd BufRead * unmap <buffer> <Leader>hs
 
+" fix .h being detected as cpp instead of c
+autocmd BufRead,BufNewFile *.h set filetype=c
 
 " C snips
 autocmd FileType c inoremap ;for for (int i = 0; i < xxx; ++i) {<cr>}<esc>kfxcw
