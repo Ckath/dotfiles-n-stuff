@@ -26,6 +26,7 @@ if [ "$1" != "--server" ] && [ "$1" != "--vps" ]; then
         "$DOT_DIR"/.xmodmap \
         "$DOT_DIR"/.xinitrc \
         "$DOT_DIR"/scripts ~/
+    mkdir ~/.weechat
     ln -sfv "$DOT_DIR"/.weechat/* ~/.weechat
 
     mkdir -p ~/.config/ranger \
@@ -35,5 +36,9 @@ if [ "$1" != "--server" ] && [ "$1" != "--vps" ]; then
     ln -sfv "$DOT_DIR"/.config/ranger/* ~/.config/ranger
     mkdir ~/.config/mpv 2> /dev/null || rm -rf ~/.config/mpv/scripts
     ln -sfv "$DOT_DIR"/.config/mpv/* ~/.config/mpv
+
+    sudo ln -sfv "$DOT_DIR"/pacman.conf \
+        "$DOT_DIR"/pakku.conf /etc
+
     ~/scripts/recolor.sh -f
 fi
