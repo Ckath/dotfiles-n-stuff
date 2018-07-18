@@ -19,6 +19,8 @@ ln -sfv "$DOT_DIR"/.vimrc \
     "$DOT_DIR"/.zprofile \
     "$DOT_DIR"/.zsh ~/
 
+sudo ln -sfv "$DOT_DIR"/makepkg.conf /etc/makepkg.conf
+
 # server setup ends here, no need for this on servers
 if [ "$1" != "--server" ] && [ "$1" != "--vps" ]; then
     rm -rf ~/scripts 2> /dev/null
