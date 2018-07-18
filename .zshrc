@@ -32,7 +32,8 @@ export KEYTIMEOUT=1
 # Alias | Functions
 alias mountCompaq="gio mount -a smb://COMPAQ/Torrents"
 alias mountWindows="sudo mkdir -p /run/media/cat/windows ; sudo mount /dev/sda2 /run/media/cat/windows"
-alias rangerme="ranger /net/Torrents/anime/"
+alias rangerme="sudo mount compaq:/media/cat/sdrive/t /net/t;\
+    ranger /net/t/anime/"
 alias remirrors="sudo chown cat:users /etc/pacman.d/mirrorlist;\
     sudo sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.pacnew;\
     sudo rankmirrors -n 6 /etc/pacman.d/mirrorlist.pacnew >! /etc/pacman.d/mirrorlist;\
@@ -77,9 +78,9 @@ colorsdesu() {
 }
 
 # startx if login, start tmux if connecting from ssh
-if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
-  exec startx
-fi
+#if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
+#  exec startx
+#fi
 if [[ -n "$SSH_CONNECTION" ]] && ! [[ -n "$TMUX" ]]; then
     tmux a || tmux
 fi
