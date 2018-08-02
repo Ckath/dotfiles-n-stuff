@@ -78,9 +78,9 @@ colorsdesu() {
 }
 
 # startx if login, start tmux if connecting from ssh
-#if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
-#  exec startx
-#fi
+if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
+  exec startx
+fi
 if [[ -n "$SSH_CONNECTION" ]] && ! [[ -n "$TMUX" ]]; then
     tmux a || tmux
 fi
