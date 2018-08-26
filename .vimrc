@@ -98,6 +98,12 @@ nnoremap <leader>cp :cprevious<cr>
 nnoremap <leader>r :so $MYVIMRC<cr>
 nnoremap <leader>sw :call CurtineIncSw()<cr>
 
+" scuffed resize commands
+nnoremap <C-W><C-l> :resize +10<cr>
+nnoremap <C-W><C-h> :resize -10<cr>
+nnoremap <C-W><C-k> :resize +10<cr>
+nnoremap <C-W><C-j> :resize -10<cr>
+
 " fix .h being detected as cpp instead of c
 autocmd BufRead,BufNewFile *.h set filetype=c
 
