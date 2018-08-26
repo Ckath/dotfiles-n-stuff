@@ -35,7 +35,7 @@ if dein#load_state('~/.vim')
     call dein#add('jebaum/vim-tmuxify')
     call dein#add('lervag/vimtex')
     call dein#add('vim-scripts/taglist.vim')
-    call dein#add('w0rp/ale')
+    call dein#add('vim-syntastic/syntastic')
     call dein#add('Ckath/vim-cate')
     call dein#add('ericcurtin/CurtineIncSw.vim')
 
@@ -97,6 +97,9 @@ nnoremap <leader>cn :cnext<cr>
 nnoremap <leader>cp :cprevious<cr>
 nnoremap <leader>r :so $MYVIMRC<cr>
 nnoremap <leader>sw :call CurtineIncSw()<cr>
+nnoremap <silent> <leader>en :lnext<cr>
+nnoremap <silent> <leader>ep :lprevious<cr>
+nnoremap <leader>ee :call ToggleList("Location List", 'l')<cr>
 
 " scuffed resize commands
 nnoremap <C-W><C-l> :resize +10<cr>
@@ -231,7 +234,7 @@ set complete=.,w,b,u,t,i,kspell
 
 " Clang Complete Settings
 let g:clang_use_library=1
-" if there's an error, allow us to see it
+let g:clang_hl_errors=0
 let g:clang_complete_copen=1
 let g:clang_complete_macros=1
 let g:clang_complete_patterns=0
@@ -289,14 +292,18 @@ let g:tmuxify_run = {
 " Vimtex Settings
 let g:vimtex_view_method = 'zathura'
 
-" ALE Settings
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
-let g:ale_linters = {
-    \   'c': ['gcc', 'cppcheck'],
-    \   'cpp': ['gcc', 'cppcheck'],
-    \}
+" Syntastic Settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_aggregate_errors = 1
+
+let g:syntastic_c_checkers = ['gcc', 'make', 'gcccheck']
+
 
 " GitGutter
 let g:gitgutter_map_keys = 0
