@@ -82,5 +82,6 @@ if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
   exec startx
 fi
 if [[ -n "$SSH_CONNECTION" ]] && ! [[ -n "$TMUX" ]]; then
+    export DISPLAY=:0
     tmux a || tmux
 fi
