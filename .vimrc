@@ -37,6 +37,7 @@ if dein#load_state('~/.vim')
     call dein#add('vim-scripts/taglist.vim')
     call dein#add('vim-syntastic/syntastic')
     call dein#add('Ckath/vim-cate')
+    call dein#add('Ckath/vimxclip')
     call dein#add('ericcurtin/CurtineIncSw.vim')
 
   " Required:
@@ -100,6 +101,7 @@ nnoremap <leader>sw :call CurtineIncSw()<cr>
 nnoremap <silent> <leader>en :lnext<cr>
 nnoremap <silent> <leader>ep :lprevious<cr>
 nnoremap <leader>ee :call ToggleList("Location List", 'l')<cr>
+nnoremap <leader>p :call GetClip()<cr>"xp
 
 " scuffed resize commands
 nnoremap <C-W><C-l> :resize +10<cr>
