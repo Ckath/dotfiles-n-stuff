@@ -90,6 +90,7 @@ nnoremap <leader>af :TlistAddFilesRecursive .<cr>
 nnoremap <leader>ut :TlistHighlightTag<cr>
 nnoremap <leader>u :GundoToggle<cr>
 nnoremap <leader>w :exec &list==1? "set nolist" : "set list"<cr>
+nnoremap <leader>i :exec &expandtab==1? "set noexpandtab" : "set expandtab"<cr>
 nnoremap <leader>ss :exec &spell==1? "set nospell" : "set spell"<cr>
 nnoremap <leader>sen :set spelllang=en<cr>
 nnoremap <leader>snl :set spelllang=nl<cr>
@@ -225,7 +226,7 @@ set cindent
 set cino=t0
 set tabstop=4
 set shiftwidth=4
-set expandtab
+set noexpandtab
 set softtabstop=4
 
 " Linenumbers
