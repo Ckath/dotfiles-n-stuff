@@ -12,4 +12,6 @@ wmname LG3D
 xmodmap /home/cat/.xmodmap
 ~/.fehbg
 xbanish -bt5000
+xinput disable 9&
+xinput map-to-output 18 DVI-D-0&
 uim-xim&
