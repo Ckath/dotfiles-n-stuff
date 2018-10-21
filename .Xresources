@@ -4,6 +4,7 @@ URxvt*scrollBar_right: false
 URxvt*saveLines:       5000
 URxvt*loginShell:      true
 URxvt*termName:        xterm-256color
+Xft.dpi:               96
 URxvt*font:            xft:dina:size=8
 
 *.foreground:  #b3b8c3
