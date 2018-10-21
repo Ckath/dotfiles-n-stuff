@@ -42,10 +42,12 @@ if [ "$1" != "--server" ] && [ "$1" != "--vps" ]; then
     ln -sfv "$DOT_DIR"/.config/pulse/* ~/.config/pulse
     mkdir ~/.config/mpv 2> /dev/null || rm -rf ~/.config/mpv/scripts
     ln -sfv "$DOT_DIR"/.config/mpv/* ~/.config/mpv
-    sudo ln -sfv "$DOT_DIR"/tlp /etc/default/tlp
 
     sudo ln -sfv "$DOT_DIR"/pacman.conf \
         "$DOT_DIR"/pakku.conf /etc
+
+	sudo ln -sfv "$DOT_DIR"/xorg.conf /etc/X11/xorg.conf
+	sudo ln -sfv "$DOT_DIR"/xorg.conf.d/* /etc/X11/xorg.conf.d
 
     ~/scripts/recolor.sh -f
 fi
