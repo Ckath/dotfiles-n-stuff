@@ -34,10 +34,12 @@ if [ "$1" != "--server" ] && [ "$1" != "--vps" ]; then
     mkdir -p ~/.config/ranger \
         ~/.config/dunst \
         ~/.config/pulseaudio-ctl \
-        ~/.config/networkmanager-dmenu 2> /dev/null
+        ~/.config/networkmanager-dmenu \
+		~/.config/pulse 2> /dev/null
     ln -sfv "$DOT_DIR"/.config/Trolltech.conf ~/.config
     ln -sfv "$DOT_DIR"/.config/pulseaudio-ctl/config ~/.config/pulseaudio-ctl/
     ln -sfv "$DOT_DIR"/.config/ranger/* ~/.config/ranger
+    ln -sfv "$DOT_DIR"/.config/pulse/* ~/.config/pulse
     mkdir ~/.config/mpv 2> /dev/null || rm -rf ~/.config/mpv/scripts
     ln -sfv "$DOT_DIR"/.config/mpv/* ~/.config/mpv
     sudo ln -sfv "$DOT_DIR"/tlp /etc/default/tlp
