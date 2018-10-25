@@ -15,7 +15,6 @@ if dein#load_state('~/.vim')
   call dein#add('~/.vim/repos/github.com/Shougo/dein.vim')
 
   " Add or remove your plugins here:
-    call dein#add('Rip-Rip/clang_complete')
     call dein#add('rust-lang/rust.vim')
     call dein#add('racer-rust/vim-racer')
     call dein#add('airblade/vim-gitgutter')
@@ -103,6 +102,7 @@ nnoremap <silent> <leader>en :lnext<cr>
 nnoremap <silent> <leader>ep :lprevious<cr>
 nnoremap <leader>ee :call ToggleList("Location List", 'l')<cr>
 nnoremap <leader>p :call GetClip()<cr>"xp
+nnoremap <leader>rt :!ctags -o /tmp/tags -R $(pwd)<cr><cr>
 
 " scuffed resize commands
 nnoremap <C-W><C-l> :resize +10<cr>
@@ -119,7 +119,7 @@ autocmd FileType c inoremap ;while while () {<cr>}<esc>kf(a
 autocmd FileType c inoremap ;if if () {<cr>}<esc>kf(a
 autocmd FileType c inoremap ;el else {<cr>}<esc>ko
 autocmd FileType c inoremap ;pf printf("\n");<esc>2F"a
-autocmd FileType c inoremap ;main int<cr>main(int arg, char *argv[])<cr>{<cr>return 0;<cr>}<esc>3kwvi(
+autocmd FileType c inoremap ;main int<cr>main(int argc, char *argv[])<cr>{<cr>return 0;<cr>}<esc>3kwvi(
 autocmd FileType c inoremap ;inc #include <stdio.h><esc>T<vt.
 autocmd FileType c inoremap ;finf for (;;) {<cr>}<esc>O
 autocmd FileType c inoremap ;def #define 
@@ -232,26 +232,13 @@ set softtabstop=4
 " Linenumbers
 set rnu
 set nu
+
+" Tags
+set tags+=/tmp/tags
+
 " Complete
 set complete=.,w,b,u,t,i,kspell
-
-" Clang Complete Settings
-let g:clang_use_library=1
-let g:clang_hl_errors=0
-let g:clang_complete_copen=1
-let g:clang_complete_macros=1
-let g:clang_complete_patterns=0
-let g:clang_close_preview=1
-let g:clang_memory_percent=70
-let g:clang_auto_select=2
-let g:clang_complete_auto=0
-let g:clang_omnicppcomplete_compliance=1
-set conceallevel=2
-set concealcursor=vin
-let g:clang_snippets=1
-let g:clang_conceal_snippets=1
-" The single one that works with clang_complete
-let g:clang_snippets_engine='clang_complete'
+set omnifunc=syntaxcomplete#Complete
 
 " Airline Settings
 let g:airline_theme = 'monocate'
