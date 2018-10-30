@@ -1,54 +1,21 @@
-"dein Scripts-----------------------------
-if &compatible
-  set nocompatible               " Be iMproved
-endif
-
-" Required:
-set runtimepath+=~/.vim/repos/github.com/Shougo/dein.vim
-
-" Required:
-if dein#load_state('~/.vim')
-  call dein#begin('~/.vim')
-
-  " Let dein manage dein
-  " Required:
-  call dein#add('~/.vim/repos/github.com/Shougo/dein.vim')
-
-  " Add or remove your plugins here:
-    call dein#add('rust-lang/rust.vim')
-    call dein#add('racer-rust/vim-racer')
-    call dein#add('airblade/vim-gitgutter')
-    call dein#add('bling/vim-airline')
-    call dein#add('scrooloose/nerdtree')
-    call dein#add('tpope/vim-repeat')
-    call dein#add('tpope/vim-surround')
-    call dein#add('tpope/vim-commentary')
-    call dein#add('tommcdo/vim-exchange')
-    call dein#add('chrisbra/Recover.vim')
-    call dein#add('junegunn/vim-easy-align')
-    call dein#add('kana/vim-textobj-user')
-    call dein#add('jceb/vim-textobj-uri')
-    call dein#add('glts/vim-textobj-comment')
-    call dein#add('vimwiki/vimwiki')
-    call dein#add('sjl/gundo.vim')
-    call dein#add('jebaum/vim-tmuxify')
-    call dein#add('lervag/vimtex')
-    call dein#add('vim-scripts/taglist.vim')
-    call dein#add('vim-syntastic/syntastic')
-    call dein#add('Ckath/vim-cate')
-    call dein#add('Ckath/vimxclip')
-    call dein#add('ericcurtin/CurtineIncSw.vim')
-
-  " Required:
-  call dein#end()
-  call dein#save_state()
-endif
-
-" Required:
-filetype plugin indent on
-syntax enable
-
-"End dein Scripts-------------------------
+" Plugins
+call zen#init()
+Plugin 'airblade/vim-gitgutter'
+Plugin 'bling/vim-airline'
+Plugin 'chrisbra/Recover.vim'
+Plugin 'Ckath/vim-cate'
+Plugin 'Ckath/vimxclip'
+Plugin 'ericcurtin/CurtineIncSw.vim'
+Plugin 'jebaum/vim-tmuxify'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'scrooloose/nerdtree'
+Plugin 'sjl/gundo.vim'
+Plugin 'tommcdo/vim-exchange'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'vim-scripts/taglist.vim'
+Plugin 'vim-syntastic/syntastic'
 
 " Functions
 function! GetBufferList()
@@ -79,7 +46,6 @@ function! ToggleList(bufname, pfx)
 endfunction
 
 " Leader Binds
-nnoremap <leader>up :call dein#update()<cr>
 nnoremap <leader>l :bnext<cr>
 nnoremap <leader>h :bprevious<cr>
 nnoremap <leader>W :w !sudo tee % > /dev/null<cr>
@@ -103,6 +69,8 @@ nnoremap <silent> <leader>ep :lprevious<cr>
 nnoremap <leader>ee :call ToggleList("Location List", 'l')<cr>
 nnoremap <leader>p :call GetClip()<cr>"xp
 nnoremap <leader>rt :!ctags -o /tmp/tags -R $(pwd)<cr><cr>
+nnoremap <leader>zu :ZenUpdate<cr>
+nnoremap <leader>zi :ZenInstall<cr>
 
 " scuffed resize commands
 nnoremap <C-W><C-l> :resize +10<cr>
@@ -150,7 +118,6 @@ autocmd FileType sh inoremap ;bash #!/bin/bash
 autocmd FileType sh inoremap ;if if [ "$1" = "" ]; then<cr>fi<esc>kf[vi[
 autocmd FileType sh inoremap ;ifb if [[ "$1" = "" ]]; then<cr>fi<esc>kf[vi[
 
-
 " File Searching
 set path+=**
 set wildmenu
@@ -166,10 +133,12 @@ set viminfo+=n~/.vim/.viminfo
 set backup
 set undofile
 
+" Other preferable behaviour
 set history=9999
 set ruler
 set showcmd
 set incsearch
+set hidden
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -218,6 +187,7 @@ endif
 
 " Highlighting/color
 colorscheme undeadcate
+let g:airline_theme = 'monocate'
 
 " Indenting
 set ai
@@ -239,10 +209,9 @@ set tags+=/tmp/tags
 " Complete
 set complete=.,w,b,u,t,i,kspell
 set omnifunc=syntaxcomplete#Complete
+set completefunc=syntaxcomplete#Complete
 
 " Airline Settings
-let g:airline_theme = 'monocate'
-
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
 
@@ -259,12 +228,6 @@ let g:airline_symbols.readonly = '[R]'
 let g:airline_symbols.linenr = ''
 let g:airline_symbols.maxlinenr = ''
 
-
-set completefunc=syntaxcomplete#Complete
-
-" Racer Settings
-set hidden
-
 " Easy Allign Settings
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
@@ -279,9 +242,6 @@ let g:tmuxify_run = {
     \ 'c': 'make run',
     \}
 
-" Vimtex Settings
-let g:vimtex_view_method = 'zathura'
-
 " Syntastic Settings
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -293,7 +253,6 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_aggregate_errors = 1
 
 let g:syntastic_c_checkers = ['gcc', 'make', 'gcccheck']
-
 
 " GitGutter
 let g:gitgutter_map_keys = 0
