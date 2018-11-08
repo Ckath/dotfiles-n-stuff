@@ -6,3 +6,4 @@ export VISUAL="vim"
 export GTK_IM_MODULE=uim
 export QT_IM_MODULE=uim
 export XMODIFIERS=@im=uim
+export QT_QPA_PLATFORMTHEME=gtk2
