@@ -10,11 +10,10 @@ fi
 # autostart applications
 ~/scripts/autostart.sh&
 
-# exec i3
 # wm loop
 printf  "session started: %s\n" "$(date)" > ~/.dwm.log
 while true; do
-    dwm 2>> ~/.dwm.log
+    dwm &>> ~/.dwm.log
     printf  "\nrestart: %s\n" "$(date)" >> ~/.dwm.log
 done
 
