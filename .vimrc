@@ -252,7 +252,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_aggregate_errors = 1
 
-let g:syntastic_c_checkers = ['gcc', 'make', 'gcccheck']
+let g:syntastic_c_checkers = ['gcc', 'gcccheck']
 
 " GitGutter
 let g:gitgutter_map_keys = 0
