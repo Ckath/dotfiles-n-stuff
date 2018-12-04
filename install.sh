@@ -46,7 +46,8 @@ if [ "$1" != "--server" ] && [ "$1" != "--vps" ]; then
     sudo ln -sfv "$DOT_DIR"/pacman.conf \
         "$DOT_DIR"/pakku.conf /etc
 
-	sudo ln -sfv "$DOT_DIR"/xorg.conf /etc/X11/xorg.conf
+	sudo mkdir -p /etc/X11/xorg.conf.d
+	sudo ln -sfv "$DOT_DIR"/xorg.conf.d/* /etc/X11/xorg.conf.d
 
     ~/scripts/recolor.sh -f
 fi
