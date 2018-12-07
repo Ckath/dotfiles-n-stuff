@@ -1,6 +1,10 @@
 #!/bin/bash
-xinput disable 9
-xinput map-to-output 8 DVI-D-0
-xinput map-to-output 19 DVI-D-0
-xsetwacom set 8 area 0 0 14720 8280
-xsetwacom set 19 area 0 0 14720 8280
+FING_ID=9
+PEN_ID=8
+ERASE_ID=15
+
+xinput disable $FING_ID
+xinput map-to-output $PEN_ID DVI-D-0
+xinput map-to-output $ERASE_ID DVI-D-0
+xsetwacom set $PEN_ID area 0 0 14720 8280
+xsetwacom set $ERASE_ID area 0 0 14720 8280
