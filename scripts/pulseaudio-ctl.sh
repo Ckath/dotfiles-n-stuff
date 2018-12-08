@@ -233,7 +233,7 @@ case "$1" in
     pactl set-sink-mute "$SINK" "$NEW_MUTE"
     MUTED=$(pacmd list-sinks|grep -A 15 '* index'|awk '/muted:/{ print $2 }')
     [[ $USEN -eq 1 ]] &&
-      notify-send.sh -r 5 --hint=int:transient:1 "Mute toggle" "Muted: $MUTED" --icon=audio-volume-muted
+      notify-send.sh -r 5 --hint=int:transient:1 "Mute toggle" "Output muted: $MUTED" --icon=audio-volume-muted
     if [[ $USEK -eq 1 ]]; then
       if [[ $MUTED == "yes" ]]; then
         kde_osd 0
@@ -252,7 +252,7 @@ case "$1" in
     pactl set-source-mute "$SOURCE" "$NEW_MUTE"
     SOURCE_MUTED=$(pacmd list-sources|grep -A 15 '* index'|awk '/muted:/{ print $2 }')
     [[ $USEN -eq 1 ]] &&
-      notify-send.sh -r 5 --hint=int:transient:1 "Mute toggle" "Muted: $SOURCE_MUTED" --icon=audio-volume-muted
+      notify-send.sh -r 5 --hint=int:transient:1 "Mute toggle" "Input muted: $SOURCE_MUTED" --icon=audio-volume-muted
     if [[ $USEK -eq 1 ]]; then
       if [[ $SOURCE_MUTED == "yes" ]]; then
         kde_osd_mic 0
