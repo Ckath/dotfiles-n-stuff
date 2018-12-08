@@ -1,6 +1,1 @@
-keycode 66 = Control_L
-clear Lock
-add Control = Control_L
-keycode 135 = Caps_Lock
-add Lock = Caps_Lock
-keycode 78 = Multi_key
+keycode 135 = Multi_key
