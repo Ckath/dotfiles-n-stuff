@@ -1,7 +1,7 @@
 #!/bin/bash
 FING_ID=9
 PEN_ID=8
-ERASE_ID=15
+ERASE_ID=18
 PAD_ID=10
 
 xinput disable $FING_ID
