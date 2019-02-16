@@ -80,6 +80,7 @@ nnoremap <C-W><C-j> :resize -10<cr>
 
 " fix .h being detected as cpp instead of c
 autocmd BufRead,BufNewFile *.h set filetype=c
+autocmd TerminalOpen * set nobuflisted
 
 " C snips
 autocmd FileType c inoremap ;for for (int i = 0; i < xxx; ++i) {<cr>}<esc>kfxcw
