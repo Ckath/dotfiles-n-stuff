@@ -11,9 +11,9 @@ fi
 ~/scripts/autostart.sh&
 
 # wm loop
-printf  "session started: %s\n" "$(date)" > ~/.dwm.log
+echo  "session started: $(date)" > ~/.dwm.log
 while true; do
     dwm &>> ~/.dwm.log
-    printf  "\nrestart: %s\n" "$(date)" >> ~/.dwm.log
+    printf  "\nrestart: $(date)\n" >> ~/.dwm.log
 done
 
