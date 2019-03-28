@@ -14,7 +14,7 @@ PROMPT='[%{%F{'$NCOLOR'}%}%B%n%b%{%f%}:%{%F{red}%}%30<...<%~%<<%{%f%}]%(!.#.$) '
 
 # git prompt
 git_dirty() {
-    git diff --quiet || echo '%F{red}%B*'
+    git diff --shortstat --quiet || echo '%F{red}%B*'
 }
 git_prompt_info() {
     if [ -d .git ]; then
