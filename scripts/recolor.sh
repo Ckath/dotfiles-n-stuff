@@ -13,7 +13,6 @@ SECBG=$(awk '/color8:/{ print $2 }' ~/.Xresources)
 RED=$(awk '/color1:/{ print $2 }' ~/.Xresources)
 
 # recolor dunst
-toilet -f fonts/lean.flf dunst.. --gay -t
 echo "dunst.."
 mkdir -p ~/.config/dunst 2> /dev/null
 cp ~/scripts/recolor_templates/dunst ~/.config/dunst/dunstrc
