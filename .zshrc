@@ -32,11 +32,9 @@ export KEYTIMEOUT=1
 # Alias | Functions
 alias :q="exit"
 alias cp="cp -i"
-alias rangerme="sudo mount compaq:/media/cat/sdrive/t /net/t &&\
-	ranger /net/t/anime/"
-alias pacccache="paccache -rk2 ; paccache -ruk0"
+alias ssh="TERM=xterm-256color ssh"
+alias pacccache="paccache -rk2 && paccache -ruk0"
 alias lidignore="systemd-inhibit --what=handle-lid-switch sleep 666d"
-alias encyb="scanwlan cyberia && nmcli con up id cyberia"
 alias pakkuscuffedgitupdate="pakku -S \$(pakku -Qq | grep \"\-git\")"
 alias ssh="TERM=xterm-256color ssh"
 
@@ -44,14 +42,6 @@ wttr() { curl wttr.in/"$1" }
 mpvyt() { mpv ytdl://ytsearch66:"$*" }
 mkcd() { mkdir -p "$1";cd "$1" }
 scanwlan() { sudo iwlist wlp3s0 scanning essid $1 }
-
-dwm-remake() {
-    ORGDIR="$(pwd)"
-    cd ~/dwm
-    make clean install
-    killall dwm
-    cd "$ORGDIR"
-}
 
 colorsdesu() {
     T=':/3'
@@ -71,7 +61,7 @@ colorsdesu() {
 if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
   exec startx
 fi
-if [[ -n "$SSH_CONNECTION" ]] && ! [[ -n "$TMUX" ]]; then
+if [ -n "$SSH_CONNECTION" ] && [ -z "$TMUX" ]; then
     export DISPLAY=:0
     tmux a || tmux
 fi

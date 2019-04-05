@@ -17,6 +17,8 @@ Plugin 'tpope/vim-surround'
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'vim-syntastic/syntastic'
 
+filetype plugin on
+
 " Functions
 function! GetBufferList()
   redir =>buflist
