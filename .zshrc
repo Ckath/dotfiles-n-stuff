@@ -36,6 +36,7 @@ alias ssh="TERM=xterm-256color ssh"
 alias pacccache="paccache -rk2 && paccache -ruk0"
 alias lidignore="systemd-inhibit --what=handle-lid-switch sleep 666d"
 alias pakkuscuffedgitupdate="pakku -S \$(pakku -Qq | grep \"\-git\")"
+alias ssh="TERM=xterm-256color ssh"
 
 wttr() { curl wttr.in/"$1" }
 mpvyt() { mpv ytdl://ytsearch66:"$*" }

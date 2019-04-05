@@ -43,6 +43,9 @@ if [ "$1" != "--server" ] && [ "$1" != "--vps" ]; then
     mkdir ~/.config/mpv 2> /dev/null || rm -rf ~/.config/mpv/scripts
     ln -sfv "$DOT_DIR"/.config/mpv/* ~/.config/mpv
 
+    sudo mkdir -p /etc/X11/xorg.conf.d
+    sudo ln -sfv "$DOT_DIR"/xorg.conf.d/* /etc/X11/xorg.conf.d
+
     sudo ln -sfv "$DOT_DIR"/pacman.conf \
         "$DOT_DIR"/pakku.conf /etc
 
