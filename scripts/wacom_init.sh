@@ -1,8 +1,8 @@
 #!/bin/bash
-FING_ID=9
-PEN_ID=8
+FING_ID=10
+PEN_ID=9
 ERASE_ID=18
-PAD_ID=10
+PAD_ID=11
 
 xinput disable $FING_ID
 xinput disable $PAD_ID
