@@ -8,6 +8,7 @@ Plugin 'Ckath/vimxclip'
 Plugin 'ericcurtin/CurtineIncSw.vim'
 Plugin 'jebaum/vim-tmuxify'
 Plugin 'junegunn/vim-easy-align'
+Plugin 'rhysd/vim-clang-format'
 Plugin 'scrooloose/nerdtree'
 Plugin 'sjl/gundo.vim'
 Plugin 'tommcdo/vim-exchange'
@@ -124,6 +125,7 @@ autocmd FileType sh inoremap ;ifb if [[ "$1" = "" ]]; then<cr>fi<esc>kf[vi[
 " File Searching
 set path+=**
 set wildmenu
+set wildignorecase
 
 " Backspacing
 set bs=2
@@ -141,6 +143,8 @@ set history=9999
 set ruler
 set showcmd
 set incsearch
+set ignorecase
+set smartcase
 set hidden
 
 " Don't use Ex mode, use Q for formatting
@@ -259,3 +263,8 @@ let g:syntastic_c_checkers = ['gcc', 'gcccheck']
 
 " GitGutter
 let g:gitgutter_map_keys = 0
+
+" clang formatter
+let g:clang_format#detect_style_file = 1
+nnoremap <buffer><leader>f :ClangFormat<cr>
+vnoremap <buffer><leader>f :ClangFormat<cr>
