@@ -74,6 +74,7 @@ nnoremap <leader>p :call GetClip()<cr>"xp
 nnoremap <leader>rt :!ctags -o /tmp/tags -R $(pwd)<cr><cr>
 nnoremap <leader>zu :ZenUpdate<cr>
 nnoremap <leader>zi :ZenInstall<cr>
+nnoremap <leader>/ :nohlsearch<cr>
 
 " scuffed resize commands
 nnoremap <C-W><C-l> :resize +10<cr>
@@ -126,6 +127,13 @@ autocmd FileType sh inoremap ;ifb if [[ "$1" = "" ]]; then<cr>fi<esc>kf[vi[
 set path+=**
 set wildmenu
 set wildignorecase
+cnoremap <C-Y> <Space><BS>
+
+" Searching
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
 
 " Backspacing
 set bs=2
@@ -138,17 +146,38 @@ set viminfo+=n~/.vim/.viminfo
 set backup
 set undofile
 
+" Highlighting/color
+syntax on
+colorscheme undeadcate
+let g:airline_theme = 'monocate'
+
+" Indenting
+set ai
+set si
+set cindent
+set cino=t0
+set tabstop=4
+set shiftwidth=4
+set noexpandtab
+set softtabstop=4
+
+" Linenumbers
+set rnu
+set nu
+
+" Tags
+set tags+=/tmp/tags
+
+" Complete
+set complete=.,w,b,u,t,i,kspell
+set omnifunc=syntaxcomplete#Complete
+set completefunc=syntaxcomplete#Complete
+
 " Other preferable behaviour
 set history=9999
 set ruler
 set showcmd
-set incsearch
-set ignorecase
-set smartcase
 set hidden
-
-" Don't use Ex mode, use Q for formatting
-map Q gq
 
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
@@ -157,13 +186,6 @@ inoremap <C-U> <C-G>u<C-U>
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
     set mouse=a
-endif
-
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-if &t_Co > 2 || has("gui_running")
-    syntax on
-    set hlsearch
 endif
 
 augroup vimrcEx
@@ -191,32 +213,6 @@ if !exists(":DiffOrig")
     command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
                 \ | wincmd p | diffthis
 endif
-
-" Highlighting/color
-colorscheme undeadcate
-let g:airline_theme = 'monocate'
-
-" Indenting
-set ai
-set si
-set cindent
-set cino=t0
-set tabstop=4
-set shiftwidth=4
-set noexpandtab
-set softtabstop=4
-
-" Linenumbers
-set rnu
-set nu
-
-" Tags
-set tags+=/tmp/tags
-
-" Complete
-set complete=.,w,b,u,t,i,kspell
-set omnifunc=syntaxcomplete#Complete
-set completefunc=syntaxcomplete#Complete
 
 " Airline Settings
 set laststatus=2
@@ -253,18 +249,16 @@ let g:tmuxify_run = {
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_aggregate_errors = 1
-
 let g:syntastic_c_checkers = ['gcc', 'gcccheck']
 
-" GitGutter
+" GitGutter Settings
 let g:gitgutter_map_keys = 0
 
-" clang formatter
+" Clang Formatter Settings
 let g:clang_format#detect_style_file = 1
 nnoremap <buffer><leader>f :ClangFormat<cr>
 vnoremap <buffer><leader>f :ClangFormat<cr>
