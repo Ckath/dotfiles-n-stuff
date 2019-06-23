@@ -4,12 +4,12 @@
 /home/cat/scripts/go2ram.sh
 xrdb -merge ~/.Xresources
 urxvtd&
+fcitx&
 sstat -d
 snotif -d
 compton -Cb --vsync-aggressive
 wmname LG3D
-xmodmap /home/cat/.xmodmap
 /home/cat/.fehbg
 xbanish -bt5000
-fcitx&
 wacom_init.sh&
+xmodmap /home/cat/.xmodmap
