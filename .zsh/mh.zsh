@@ -1,5 +1,4 @@
 # mh theme
-# preview: http://cl.ly/1y2x0W0E3t2C0F29043z
 
 # features:
 # path is autoshortened to ~30 characters
@@ -13,12 +12,11 @@ if [ $UID -eq 0 ]; then NCOLOR="green"; else NCOLOR="white"; fi
 PROMPT='[%{%F{'$NCOLOR'}%}%B%n%b%{%f%}:%{%F{red}%}%30<...<%~%<<%{%f%}]%(!.#.$) '
 
 # git prompt
-git_dirty() {
-    git diff --shortstat --quiet || echo '%F{red}%B*'
-}
+git_dirty() { git diff --shortstat --quiet || echo '%F{red}%B*' }
 git_prompt_info() {
-    if [ -d .git ]; then
-        echo '%F{yellow}%B'$((git symbolic-ref HEAD 2> /dev/null || git rev-parse --short HEAD) | cut -d'/' -f3-)$(git_dirty)
+    if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]]; then
+        echo '%F{yellow}%B'$((git symbolic-ref HEAD 2> /dev/null ||
+                    git rev-parse --short HEAD) | cut -d'/' -f3-)$(git_dirty)
     fi
 }
 
