@@ -27,6 +27,7 @@ bindkey "\e[A" history-substring-search-up
 bindkey "\e[B" history-substring-search-down
 bindkey "^P" history-substring-search-up
 bindkey "^N" history-substring-search-down
+bindkey "^?" backward-delete-char
 export KEYTIMEOUT=1
 
 # Alias | Functions
