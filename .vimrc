@@ -9,9 +9,7 @@ Plugin 'ericcurtin/CurtineIncSw.vim'
 Plugin 'jebaum/vim-tmuxify'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'rhysd/vim-clang-format'
-Plugin 'scrooloose/nerdtree'
 Plugin 'sjl/gundo.vim'
-Plugin 'tommcdo/vim-exchange'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
@@ -52,7 +50,6 @@ endfunction
 nnoremap <leader>l :bnext<cr>
 nnoremap <leader>h :bprevious<cr>
 nnoremap <leader>W :w !sudo tee % > /dev/null<cr>
-nnoremap <leader>n :NERDTreeToggle<cr>
 nnoremap <leader>t :TlistToggle<cr>
 nnoremap <leader>af :TlistAddFilesRecursive .<cr>
 nnoremap <leader>ut :TlistHighlightTag<cr>
