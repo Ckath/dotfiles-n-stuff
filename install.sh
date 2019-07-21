@@ -52,5 +52,8 @@ if [ "$1" != "--server" ] && [ "$1" != "--vps" ]; then
 	sudo mkdir -p /etc/X11/xorg.conf.d
 	sudo ln -sfv "$DOT_DIR"/xorg.conf.d/* /etc/X11/xorg.conf.d
 
+    $(cd ~/.mozilla/firefox/*.default && mkdir chrome)
+    ln -svf "$DOT_DIR"/userContent.css ~/.mozilla/firefox/*.default/chrome
+
     ~/scripts/recolor.sh -f
 fi
