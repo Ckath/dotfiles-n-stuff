@@ -53,5 +53,9 @@ if [ "$1" != "--server" ] && [ "$1" != "--vps" ]; then
 	sudo ln -sfv "$DOT_DIR"/grub /etc/default
 	sudo ln -sfv "$DOT_DIR"/fuck_intel.conf /etc/modprobe.d/
 
+
+    $(cd ~/.mozilla/firefox/*.default && mkdir chrome)
+    ln -svf "$DOT_DIR"/userContent.css ~/.mozilla/firefox/*.default/chrome
+
     ~/scripts/recolor.sh -f
 fi
