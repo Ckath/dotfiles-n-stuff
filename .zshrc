@@ -57,7 +57,7 @@ colorsdesu() {
     echo
 }
 
-# startx if login, start tmux if connecting from ssh
+# Startx if login, start tmux if connecting from ssh
 if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
   exec startx
 fi
