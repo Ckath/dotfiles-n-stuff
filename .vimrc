@@ -164,6 +164,7 @@ set tags+=/tmp/tags
 set complete=.,w,b,u,t,i,kspell
 set omnifunc=syntaxcomplete#Complete
 set completefunc=syntaxcomplete#Complete
+set completeopt-=preview
 
 " Other preferable behaviour
 set history=9999
