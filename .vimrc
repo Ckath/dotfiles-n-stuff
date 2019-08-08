@@ -6,14 +6,12 @@ Plugin 'chrisbra/Recover.vim'
 Plugin 'Ckath/vim-cate'
 Plugin 'Ckath/vimxclip'
 Plugin 'ericcurtin/CurtineIncSw.vim'
-Plugin 'jebaum/vim-tmuxify'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'sjl/gundo.vim'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
-Plugin 'vim-scripts/taglist.vim'
 Plugin 'vim-syntastic/syntastic'
 
 filetype plugin on
@@ -50,9 +48,6 @@ endfunction
 nnoremap <leader>l :bnext<cr>
 nnoremap <leader>h :bprevious<cr>
 nnoremap <leader>W :w !sudo tee % > /dev/null<cr>
-nnoremap <leader>t :TlistToggle<cr>
-nnoremap <leader>af :TlistAddFilesRecursive .<cr>
-nnoremap <leader>ut :TlistHighlightTag<cr>
 nnoremap <leader>u :GundoToggle<cr>
 nnoremap <leader>w :exec &list==1? "set nolist" : "set list"<cr>
 nnoremap <leader>i :exec &expandtab==1? "set noexpandtab" : "set expandtab"<cr>
@@ -231,16 +226,6 @@ let g:airline_symbols.maxlinenr = ''
 " Easy Allign Settings
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
-
-" Tmuxify Settings
-let g:tmuxify_global_maps = 1
-let g:tmuxify_custom_command = 'tmux split-window -d -l 15'
-let g:tmuxify_map_prefix = '<leader>m'
-let g:tmuxify_run = {
-    \ 'sh': 'bash %',
-    \ 'go': 'go build %',
-    \ 'c': 'make run',
-    \}
 
 " Syntastic Settings
 set statusline+=%#warningmsg#
