@@ -7,7 +7,6 @@ urxvtd&
 fcitx&
 sstat -d
 snotif -d
-compton -Cb --vsync-aggressive
 wmname LG3D
 /home/cat/.fehbg
 xbanish -bt5000
