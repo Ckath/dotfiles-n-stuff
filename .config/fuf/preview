@@ -1,0 +1,127 @@
+# this preview script is originally based off of rangers scope.sh
+# unlike ranger, fuf expects the preview script to handle everything
+# its also expected to be executed within the directory of the file
+# from generating text previews to rendering the images within the terminal
+
+# Meaningful aliases for arguments:
+path="$1"
+[[ ${path:0:1} == "-" ]] && path=./"$1" # fix filenames starting with -
+width="$2"  # Width of the preview pane (number of fitting characters)
+height="$3" # Height of the preview pane (number of fitting characters)
+width_px="$4" # Width of the preview img in px
+height_px="$5" # Height of the preview img in px
+wpos_px="$6" # x position of preview img in px
+hpos_px="$7" # y position of preview img in px
+cached="$(echo ~)/.thumbnails/$path" # location used to cache image previews
+
+# preview img position finetuning, this differs slightly with terminal/font
+# you might have to tweak this
+offset_w=1
+offset_h=-1
+
+# fileinfo
+mimetype=$(file --mime-type -Lb "$path")
+extension=$(/bin/echo "${path##*.}" | awk '{print tolower($0)}')
+
+# functions
+has() { type $1 &> /dev/null; }                   # check if program is available
+trim() { head -n $height | colrm $(($width+1)); } # trim output to preview window
+
+# clears preview img area
+clearimg() {
+	echo -e "6;$((wpos_px+$offset_w));$((hpos_px+$offset_h));$((width_px+2));$((height_px+2))\n3;" | /usr/lib/w3m/w3mimgdisplay
+}
+
+# displays images at guestimated coordinates
+displayimg() {
+	read img_width img_height <<< $(echo "5;$1" | /usr/lib/w3m/w3mimgdisplay)
+
+	if [ "$img_width" -gt "$width_px" ]; then
+		img_height=$((img_height * width_px/img_width))
+		img_width=$width_px
+	fi
+	if [ "$img_height" -gt "$height_px" ]; then
+		img_width=$((img_width * height_px/img_height))
+		img_height=$height_px
+	fi
+	echo -e "0;1;$((wpos_px+$offset_w));$((hpos_px+$offset_h));$img_width;$img_height;;;;;$1\n4;\n3;" | /usr/lib/w3m/w3mimgdisplay
+}
+
+clearimg # clear any img
+
+# Image previews
+# no explicit checking for programs here, 
+# as we want to notify the user about a missing utility
+case "$mimetype" in
+	# Image previews for SVG files, disabled by default.
+	image/svg+xml)
+		cached="$cached.png"
+		convert "$path" "$cached" &> /tmp/fufimgerr \
+		&& displayimg "$cached" || cat /tmp/fufimgerr
+		exit;;
+	# Image previews for PDF files
+	application/pdf)
+		pdftoppm -jpeg -singlefile "$path" "${cached//.jpg}" &> /tmp/fufimgerr \
+		&& displayimg "$cached.jpg" || cat /tmp/fufimgerr
+		exit;;
+	image/*)
+		displayimg "$path"
+		exit;;
+	# Image preview for video, disabled by default.:
+	video/* | */x-shockwave-flash)
+		ffmpegthumbnailer -i "$path" -o "$cached" -s 0 &> /tmp/fufimgerr \
+		&& displayimg "$cached" || cat /tmp/fufimgerr
+		exit;;
+esac
+
+case "$extension" in
+	# Archive extensions:
+	a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|\
+	rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)
+		has unzip  && unzip -l "$path"|trim && exit
+		has als    && als "$path"|trim && exit
+		has acat   && acat "$path"|trim && exit
+		has bsdtar && bsdtar -lf "$path"|trim && exit
+		;;
+	rar)
+		# avoid password prompt by providing empty password
+		has unrar && unrar -p- l "$path"|trim && exit;;
+	7z)
+		# avoid password prompt by providing empty password
+		has 7z && 7z -p l "$path"|trim && exit;;
+	# PDF documents:
+	pdf)
+		has pdftotext && pdftotext -l 10 -nopgbrk -q "$path" -|trim && exit;;
+	# BitTorrent Files
+	torrent)
+		has transmission-show && transmission-show "$path"|trim && exit;;
+	# ODT Files
+	odt|ods|odp|sxw)
+		has odt2txt && odt2txt "$path"|trim && exit;;
+	# HTML Pages:
+	htm|html|xhtml)
+		has w3m    && w3m -dump "$path"|trim && exit
+		has lynx   && lynx -dump "$path"|trim && exit
+		has elinks && elinks -dump "$path"|trim && exit
+		;;
+esac
+
+case "$mimetype" in
+	# Syntax highlight for text files:
+	text/* | */xml)
+		has cat && cat "$path"|trim && exit;;
+	# Ascii-previews of images:
+	image/*)
+		has img2txt && img2txt --gamma=0.6 --width="$width" "$path"|trim && exit;;
+	# Display information about media files:
+	video/* | audio/*)
+		has exiftool  && exiftool "$path"|trim && exit
+		has mediainfo && mediainfo "$path"|trim && exit
+		;;
+	inode/directory)
+		has tree && tree "$path"|trim && exit
+		has ls   && ls -l "$path"|trim && exit
+		;;
+esac
+
+printf "type:\t\t$mimetype\nextension:\t$extension\n\nno preview configured"

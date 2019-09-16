@@ -42,6 +42,7 @@ if [ "$1" != "--server" ] && [ "$1" != "--vps" ]; then
     ln -sfv "$DOT_DIR"/.config/pulse/* ~/.config/pulse
     mkdir ~/.config/mpv 2> /dev/null || rm -rf ~/.config/mpv/scripts
     ln -sfv "$DOT_DIR"/.config/mpv/* ~/.config/mpv
+	ln -sfv "$DOT_DIR"/.config/fuf ~/.config
 
     sudo mkdir -p /etc/X11/xorg.conf.d
     sudo ln -sfv "$DOT_DIR"/xorg.conf.d/* /etc/X11/xorg.conf.d
