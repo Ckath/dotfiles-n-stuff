@@ -1,6 +1,6 @@
 #!/bin/bash
 # minimal init script for vim
 
-mkdir -p ~/.vim/.undo ~/.vim/.backup ~/.vim/.swp ~/.vim/autoload
-curl https://raw.githubusercontent.com/danishprakash/vim-zen/master/zen.vim > ~/.vim/autoload/zen.vim
+mkdir -p ~/.vim/.undo ~/.vim/.backup ~/.vim/.swp
+git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac
 vim

@@ -1,18 +1,23 @@
 " Plugins
-call zen#init()
-Plugin 'airblade/vim-gitgutter'
-Plugin 'bling/vim-airline'
-Plugin 'chrisbra/Recover.vim'
-Plugin 'Ckath/vim-cate'
-Plugin 'Ckath/vimxclip'
-Plugin 'ericcurtin/CurtineIncSw.vim'
-Plugin 'junegunn/vim-easy-align'
-Plugin 'rhysd/vim-clang-format'
-Plugin 'sjl/gundo.vim'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
-Plugin 'vim-syntastic/syntastic'
+set packpath^=~/.vim
+if exists('*minpac#init')
+	call minpac#init()
+	call minpac#add('k-takata/minpac', {'type': 'opt'})
+
+	call minpac#add('airblade/vim-gitgutter')
+	call minpac#add('bling/vim-airline')
+	call minpac#add('chrisbra/Recover.vim')
+	call minpac#add('Ckath/vim-cate')
+	call minpac#add('Ckath/vimxclip')
+	call minpac#add('ericcurtin/CurtineIncSw.vim')
+	call minpac#add('junegunn/vim-easy-align')
+	call minpac#add('rhysd/vim-clang-format')
+	call minpac#add('sjl/gundo.vim')
+	call minpac#add('tpope/vim-commentary')
+	call minpac#add('tpope/vim-repeat')
+	call minpac#add('tpope/vim-surround')
+	call minpac#add('vim-syntastic/syntastic')
+endif
 
 filetype plugin on
 
@@ -64,8 +69,9 @@ nnoremap <silent> <leader>ep :lprevious<cr>
 nnoremap <leader>ee :call ToggleList("Location List", 'l')<cr>
 nnoremap <leader>p :call GetClip()<cr>"xp
 nnoremap <leader>rt :!ctags -o /tmp/tags -R $(pwd)<cr><cr>
-nnoremap <leader>zu :ZenUpdate<cr>
-nnoremap <leader>zi :ZenInstall<cr>
+nnoremap <leader>mu :packadd minpac <bar> source $MYVIMRC <bar> call minpac#update('', {'do': 'call minpac#status()'})<cr>
+nnoremap <leader>mc :packadd minpac <bar> source $MYVIMRC <bar> call minpac#clean()<cr>
+nnoremap <leader>ms :packadd minpac <bar> source $MYVIMRC <bar> call minpac#status()<cr>
 nnoremap <leader>/ :nohlsearch<cr>
 
 " scuffed resize commands
