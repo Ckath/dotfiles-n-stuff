@@ -1,21 +1,25 @@
 " Plugins
-call zen#init()
-Plugin 'airblade/vim-gitgutter'
-Plugin 'bling/vim-airline'
-Plugin 'chrisbra/Recover.vim'
-Plugin 'Ckath/vim-cate'
-Plugin 'Ckath/vimxclip'
-Plugin 'ericcurtin/CurtineIncSw.vim'
-Plugin 'jebaum/vim-tmuxify'
-Plugin 'junegunn/vim-easy-align'
-Plugin 'scrooloose/nerdtree'
-Plugin 'sjl/gundo.vim'
-Plugin 'tommcdo/vim-exchange'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
-Plugin 'vim-scripts/taglist.vim'
-Plugin 'vim-syntastic/syntastic'
+set packpath^=~/.vim
+if exists('*minpac#init')
+	call minpac#init()
+	call minpac#add('k-takata/minpac', {'type': 'opt'})
+
+	call minpac#add('airblade/vim-gitgutter')
+	call minpac#add('bling/vim-airline')
+	call minpac#add('chrisbra/Recover.vim')
+	call minpac#add('Ckath/vim-cate')
+	call minpac#add('Ckath/vimxclip')
+	call minpac#add('ericcurtin/CurtineIncSw.vim')
+	call minpac#add('junegunn/vim-easy-align')
+	call minpac#add('rhysd/vim-clang-format')
+	call minpac#add('sjl/gundo.vim')
+	call minpac#add('tpope/vim-commentary')
+	call minpac#add('tpope/vim-repeat')
+	call minpac#add('tpope/vim-surround')
+	call minpac#add('vim-syntastic/syntastic')
+endif
+
+filetype plugin on
 
 " Functions
 function! GetBufferList()
@@ -49,10 +53,6 @@ endfunction
 nnoremap <leader>l :bnext<cr>
 nnoremap <leader>h :bprevious<cr>
 nnoremap <leader>W :w !sudo tee % > /dev/null<cr>
-nnoremap <leader>n :NERDTreeToggle<cr>
-nnoremap <leader>t :TlistToggle<cr>
-nnoremap <leader>af :TlistAddFilesRecursive .<cr>
-nnoremap <leader>ut :TlistHighlightTag<cr>
 nnoremap <leader>u :GundoToggle<cr>
 nnoremap <leader>w :exec &list==1? "set nolist" : "set list"<cr>
 nnoremap <leader>i :exec &expandtab==1? "set noexpandtab" : "set expandtab"<cr>
@@ -69,8 +69,10 @@ nnoremap <silent> <leader>ep :lprevious<cr>
 nnoremap <leader>ee :call ToggleList("Location List", 'l')<cr>
 nnoremap <leader>p :call GetClip()<cr>"xp
 nnoremap <leader>rt :!ctags -o /tmp/tags -R $(pwd)<cr><cr>
-nnoremap <leader>zu :ZenUpdate<cr>
-nnoremap <leader>zi :ZenInstall<cr>
+nnoremap <leader>mu :packadd minpac <bar> source $MYVIMRC <bar> call minpac#update('', {'do': 'call minpac#status()'})<cr>
+nnoremap <leader>mc :packadd minpac <bar> source $MYVIMRC <bar> call minpac#clean()<cr>
+nnoremap <leader>ms :packadd minpac <bar> source $MYVIMRC <bar> call minpac#status()<cr>
+nnoremap <leader>/ :nohlsearch<cr>
 
 " scuffed resize commands
 nnoremap <C-W><C-l> :resize +10<cr>
@@ -80,6 +82,7 @@ nnoremap <C-W><C-j> :resize -10<cr>
 
 " fix .h being detected as cpp instead of c
 autocmd BufRead,BufNewFile *.h set filetype=c
+autocmd TerminalOpen * set nobuflisted
 
 " C snips
 autocmd FileType c inoremap ;for for (int i = 0; i < xxx; ++i) {<cr>}<esc>kfxcw
@@ -121,6 +124,14 @@ autocmd FileType sh inoremap ;ifb if [[ "$1" = "" ]]; then<cr>fi<esc>kf[vi[
 " File Searching
 set path+=**
 set wildmenu
+set wildignorecase
+cnoremap <C-Y> <Space><BS>
+
+" Searching
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
 
 " Backspacing
 set bs=2
@@ -133,15 +144,39 @@ set viminfo+=n~/.vim/.viminfo
 set backup
 set undofile
 
+" Highlighting/color
+syntax on
+colorscheme undeadcate
+let g:airline_theme = 'monocate'
+
+" Indenting
+set ai
+set si
+set cindent
+set cino=t0
+set tabstop=4
+set shiftwidth=4
+set noexpandtab
+set softtabstop=4
+
+" Linenumbers
+set rnu
+set nu
+
+" Tags
+set tags+=/tmp/tags
+
+" Complete
+set complete=.,w,b,u,t,i,kspell
+set omnifunc=syntaxcomplete#Complete
+set completefunc=syntaxcomplete#Complete
+set completeopt-=preview
+
 " Other preferable behaviour
 set history=9999
 set ruler
 set showcmd
-set incsearch
 set hidden
-
-" Don't use Ex mode, use Q for formatting
-map Q gq
 
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
@@ -150,13 +185,6 @@ inoremap <C-U> <C-G>u<C-U>
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
     set mouse=a
-endif
-
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-if &t_Co > 2 || has("gui_running")
-    syntax on
-    set hlsearch
 endif
 
 augroup vimrcEx
@@ -185,32 +213,6 @@ if !exists(":DiffOrig")
                 \ | wincmd p | diffthis
 endif
 
-" Highlighting/color
-colorscheme undeadcate
-let g:airline_theme = 'monocate'
-
-" Indenting
-set ai
-set si
-set cindent
-set cino=t0
-set tabstop=4
-set shiftwidth=4
-set noexpandtab
-set softtabstop=4
-
-" Linenumbers
-set rnu
-set nu
-
-" Tags
-set tags+=/tmp/tags
-
-" Complete
-set complete=.,w,b,u,t,i,kspell
-set omnifunc=syntaxcomplete#Complete
-set completefunc=syntaxcomplete#Complete
-
 " Airline Settings
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
@@ -232,27 +234,20 @@ let g:airline_symbols.maxlinenr = ''
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
-" Tmuxify Settings
-let g:tmuxify_global_maps = 1
-let g:tmuxify_custom_command = 'tmux split-window -d -l 15'
-let g:tmuxify_map_prefix = '<leader>m'
-let g:tmuxify_run = {
-    \ 'sh': 'bash %',
-    \ 'go': 'go build %',
-    \ 'c': 'make run',
-    \}
-
 " Syntastic Settings
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_aggregate_errors = 1
-
 let g:syntastic_c_checkers = ['gcc', 'gcccheck']
 
-" GitGutter
+" GitGutter Settings
 let g:gitgutter_map_keys = 0
+
+" Clang Formatter Settings
+let g:clang_format#detect_style_file = 1
+nnoremap <buffer><leader>f :ClangFormat<cr>
+vnoremap <buffer><leader>f :ClangFormat<cr>
