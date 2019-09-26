@@ -56,5 +56,8 @@ if [ "$1" != "--server" ] && [ "$1" != "--vps" ]; then
     $(cd ~/.mozilla/firefox/*.default && mkdir chrome)
     ln -svf "$DOT_DIR"/userContent.css ~/.mozilla/firefox/*.default/chrome
 
+	mkdir ~/.urxvt
+	ln -sfv "$DOT_DIR"/.urxvt/* ~/.urxvt
+
     ~/scripts/recolor.sh -f
 fi

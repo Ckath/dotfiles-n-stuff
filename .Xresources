@@ -43,7 +43,7 @@ URxvt*imFont:          -misc-sazanami*
 *.color7:      #b3b8c3
 *.color15:     #eeeeee
 
-URxvt.perl-ext-common: default,matcher
+URxvt.perl-ext-common: default,matcher,filter-paste
 URxvt.url-launcher:    /usr/bin/firefox
 URxvt.matcher.button:  1
 
