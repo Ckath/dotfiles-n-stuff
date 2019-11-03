@@ -36,7 +36,7 @@ alias rangerme="sudo mount asrock:/mnt/sdrive/torrents /net/torrents &&\
 	ranger /net/torrents/anime/"
 alias pacccache="paccache -rk2 ; paccache -ruk0"
 alias lidignore="systemd-inhibit --what=handle-lid-switch sleep 666d"
-alias encyb="scanwlan cyberia && nmcli con up id cyberia"
+alias encyb="while ! nmcli device wifi connect cyberia hidden yes; do sleep 5; done"
 alias pakkuscuffedgitupdate="pakku -S \$(pakku -Qq | grep \"\-git\")"
 alias ssh="TERM=xterm-256color ssh"
 
