@@ -162,6 +162,7 @@ set softtabstop=4
 " Linenumbers
 set rnu
 set nu
+set cursorline cursorlineopt=number
 
 " Tags
 set tags+=/tmp/tags
