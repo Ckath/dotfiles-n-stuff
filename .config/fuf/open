@@ -1,0 +1,17 @@
+#!/bin/bash
+# minimal open script for fuf
+
+runquiet() { "$@" &> /dev/null; } # run without output on terminal
+
+case $(file --mime-type -b "$1") in
+	video/* | audio/*)
+		runquiet mpv -no-terminal --force-window "$1" && exit;;
+	*/x-xcf)
+		runquiet gimp "$1" && exit;;
+	image/*)
+		runquiet mpv --loop-file=inf --no-terminal "$1" && exit;;
+	*/pdf)
+		runquiet zathura "$1" && exit;;
+esac
+
+$EDITOR "$1"
