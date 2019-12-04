@@ -140,7 +140,6 @@ set bs=2
 set undodir=~/.vim/.undo// 
 set backupdir=~/.vim/.backup//
 set directory=~/.vim/.swp//
-set viminfo+=n~/.vim/.viminfo
 set backup
 set undofile
 
