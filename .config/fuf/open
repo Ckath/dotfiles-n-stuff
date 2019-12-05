@@ -3,6 +3,7 @@
 
 runquiet() { "$@" &> /dev/null; } # run without output on terminal
 
+# filetype handlers
 case $(file --mime-type -b "$1") in
 	video/* | audio/*)
 		runquiet mpv -no-terminal --force-window "$1" && exit;;
@@ -14,4 +15,8 @@ case $(file --mime-type -b "$1") in
 		runquiet zathura "$1" && exit;;
 esac
 
+# special case for 'last Q' mpv playlist markers
+[[ "$1" == "!lastQ" ]] && mpv $(cat "!lastQ") && exit
+
+# open everything else in editor
 $EDITOR "$1"
