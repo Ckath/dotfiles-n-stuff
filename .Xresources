@@ -46,6 +46,8 @@ URxvt.perl-ext-common: default,matcher,filter-paste,keyboard-select
 URxvt.url-launcher:    /usr/bin/firefox
 URxvt.matcher.button:  1
 URxvt.keysym.M-Escape: perl:keyboard-select:activate
+URxvt.keysym.M-Delete:     matcher:select
+URxvt.keysym.C-Delete:     matcher:list
 
 ! Disable ISO 14755 unicode input so I can use Ctrl-Shift bindings
 URxvt.iso14755:        false
