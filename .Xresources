@@ -43,9 +43,10 @@ URxvt*imFont:          -misc-sazanami*
 *.color7:      #b3b8c3
 *.color15:     #eeeeee
 
-URxvt.perl-ext-common: default,matcher,filter-paste
+URxvt.perl-ext-common: default,matcher,filter-paste,keyboard-select
 URxvt.url-launcher:    /usr/bin/firefox
 URxvt.matcher.button:  1
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
 
 ! Disable ISO 14755 unicode input so I can use Ctrl-Shift bindings
 URxvt.iso14755:        false
