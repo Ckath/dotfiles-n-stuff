@@ -22,7 +22,7 @@
 #   v/V/Ctrl-v: Toggle normal/linewise/blockwise selection
 #   y/Return:   Copy selection to primary buffer, Return: quit afterwards
 #   Y:          Copy selected lines to primary buffer or cursor line and quit
-#   q/Escape:   Quit keyboard selection mode
+#   i/q/Escape:   Quit keyboard selection mode
 
 # Options:
 #   URxvt.keyboard-select.clipboard: If true, copy to clipboard too
@@ -131,7 +131,7 @@ sub key_press {
 			move_to($self, ';');
 			status_area($self);
 		}
-	} elsif ($keysym == 0xff1b || lc($key) eq 'q') {
+	} elsif ($keysym == 0xff1b || lc($key) eq 'q' || lc($key) eq 'i') {
 		deactivate($self);
 	} elsif (lc($key) eq 'y' || $keysym == 0xff0d ||
 			(lc($key) eq 'm' && $event->{state} & urxvt::ControlMask)) {
