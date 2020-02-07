@@ -12,7 +12,7 @@ if exists('*minpac#init')
 	call minpac#add('ericcurtin/CurtineIncSw.vim')
 	call minpac#add('junegunn/vim-easy-align')
 	call minpac#add('rhysd/vim-clang-format')
-	call minpac#add('sjl/gundo.vim')
+	call minpac#add('mbbill/undotree')
 	call minpac#add('tpope/vim-commentary')
 	call minpac#add('tpope/vim-repeat')
 	call minpac#add('tpope/vim-surround')
@@ -53,7 +53,7 @@ endfunction
 nnoremap <leader>l :bnext<cr>
 nnoremap <leader>h :bprevious<cr>
 nnoremap <leader>W :w !sudo tee % > /dev/null<cr>
-nnoremap <leader>u :GundoToggle<cr>
+nnoremap <leader>u :UndotreeToggle<cr>
 nnoremap <leader>w :exec &list==1? "set nolist" : "set list"<cr>
 nnoremap <leader>i :exec &expandtab==1? "set noexpandtab" : "set expandtab"<cr>
 nnoremap <leader>ss :exec &spell==1? "set nospell" : "set spell"<cr>
