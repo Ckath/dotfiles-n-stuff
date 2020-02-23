@@ -1,5 +1,4 @@
 #!/bin/bash
-base=""
 base_devel=""
 explicit=""
 
@@ -26,10 +25,6 @@ for package in $packages; do
 done
 
 echo "$(pacman -Q | wc -l) total packages"
-echo
-
-echo "> BASE ($(($(echo -e $base | wc -l) - 1))):"
-echo -e "$base" | sort -Vrk 2 | head -n -1
 echo
 
 echo "> BASE DEVEL ($(($(echo -e $base_devel | wc -l) - 1))):"
