@@ -5,14 +5,17 @@ zstyle ':completion:*:*:*:*:*' menu yes select
 zstyle ':completion:*' menu select
 setopt MENU_COMPLETE
 export HISTFILE=/home/cat/.zsh_history
-export SAVEHIST=100000
-export HISTSIZE=100000
+export SAVEHIST=2147483647
+export HISTSIZE=2147483647
 setopt APPEND_HISTORY
-setopt SHARE_HISTORY
-setopt HIST_REDUCE_BLANKS
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_DUPS
+setopt HIST_REDUCE_BLANKS
 setopt HIST_VERIFY
 setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
 
 # Theming
 source /home/cat/.zsh/mh.zsh
@@ -60,7 +63,7 @@ colorsdesu() {
 
 # Startx if login, start tmux if connecting from ssh
 if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
-  exec startx
+    exec startx
 fi
 if [ -n "$SSH_CONNECTION" ] && [ -z "$TMUX" ]; then
     export DISPLAY=:0
