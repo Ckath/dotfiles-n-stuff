@@ -17,5 +17,5 @@ if [[ -z "$1" ]]; then
     fi
 fi
 
-curl --form thefile="@$1" --form key="$(cat /home/cat/supersekretkey)" https://ckat.space/api.php | xclip -selection clipboard
+curl --form thefile="@$1" --form key="$(cat /home/cat/supersekretkey)" https://8.xn--z7x.xn--6frz82g/api.php | xclip -selection clipboard
 xclip -o -selection clipboard | xargs -0 notify-send -i dialog-information
