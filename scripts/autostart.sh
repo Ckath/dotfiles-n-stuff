@@ -11,4 +11,3 @@ wmname LG3D
 /home/cat/.fehbg
 xbanish -bt5000
 wacom_init.sh&
-xmodmap /home/cat/.xmodmap
