@@ -246,6 +246,8 @@ let g:syntastic_c_checkers = ['gcc']
 
 " GitGutter Settings
 let g:gitgutter_map_keys = 0
+autocmd BufWritePost * GitGutter
+autocmd VimEnter * autocmd! gitgutter CursorHold,CursorHoldI
 
 " Clang Formatter Settings
 let g:clang_format#detect_style_file = 1
