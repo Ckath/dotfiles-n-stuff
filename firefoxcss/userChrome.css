@@ -1,0 +1,9 @@
+* { border-radius: 0px!important }
+#urlbar[breakout-extend] {
+	top: calc((var(--urlbar-toolbar-height) - var(--urlbar-height)) / 2)!important;
+	left:calc((var(--urlbar-toolbar-width) - var(--urlbar-width)) / 2)!important;
+	width:100%!important
+}
+#urlbar[breakout-extend] #urlbar-input-container { height: var(--urlbar-height)!important; padding:0px!important }
+.urlbarView { margin:0px!important;width:100%!important}
+.urlbarView-row { padding:0px!important }

@@ -54,7 +54,7 @@ if [ "$1" != "--server" ] && [ "$1" != "--vps" ]; then
 	sudo ln -sfv "$DOT_DIR"/xorg.conf.d/* /etc/X11/xorg.conf.d
 
     $(cd ~/.mozilla/firefox/*.default && mkdir chrome)
-    ln -svf "$DOT_DIR"/userContent.css ~/.mozilla/firefox/*.default/chrome
+    ln -svf "$DOT_DIR"/firefoxcss/* ~/.mozilla/firefox/*.default/chrome
 
 	mkdir ~/.urxvt
 	ln -sfv "$DOT_DIR"/.urxvt/* ~/.urxvt
