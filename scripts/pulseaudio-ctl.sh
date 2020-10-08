@@ -51,8 +51,7 @@ fi
 
 # stop if the above failed to set a value for PCV
 if [[ -z $PCV ]]; then
-  echo -e ${BLD}"Cannot determine which version of pactl is installed. ${RED}Aborting."${NRM}
-  exit 1
+  PCV=2
 fi
 
 is_integer() {
