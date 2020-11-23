@@ -7,14 +7,18 @@ if [[ "$1" = "-c" ]]; then
     notify-send "image copied to clipboard" -t 10
     exit 0
 fi
-if [[ -z "$1" ]]; then
+if [[ -z "$1" || "$1" = "-t" && -z "$2" ]]; then
     if maim -s -u /tmp/pic.png; then
-        upload.sh /tmp/pic.png
+        upload.sh $1 /tmp/pic.png
         exit 0
     else
         notify-send "upload canceled" -t 10
         exit 1
     fi
+fi
+if [[ "$1" = "-t" ]]; then
+	tmpupload.sh "$2"
+	exit 0
 fi
 
 curl --form thefile="@$1" --form key="$(cat /home/cat/supersekretkey)" https://8.xn--z7x.xn--6frz82g/api.php | xclip -selection clipboard
