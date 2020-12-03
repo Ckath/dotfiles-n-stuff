@@ -2,7 +2,13 @@
 # minimal region recording script with ffmpeg and slop
 
 # stop recording and convert to webm on second run
-pgrep ffmpeg && pkill -9 ffmpeg && ffmpeg -y -i /tmp/rec.mkv /tmp/rec.webm
+if pgrep ffmpeg; then
+	pkill ffmpeg
+	sleep 1
+	ffmpeg -y -i /tmp/rec.mkv /tmp/rec.webm
+	notify-send "rec.sh" "done converting /tmp/rec.webm"
+	exit
+fi
 
 # record selected region of screen
 rect=$(slop -f "%x %y %w %h %g %i") || exit 1
