@@ -11,6 +11,7 @@ fi
 ~/scripts/autostart.sh&
 
 # wm loop
+mv ~/.dwm.log ~/.dwm.log.old
 echo  "session started: $(date)" > ~/.dwm.log
 while true; do
     dwm &>> ~/.dwm.log
