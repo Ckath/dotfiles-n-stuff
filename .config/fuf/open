@@ -4,7 +4,7 @@
 runquiet() { "$@" &> /dev/null; } # run without output on terminal
 
 # filetype handlers
-case $(file --mime-type -bk "$1") in
+case $(file --mime-type -Lb "$1") in
 	video/* | audio/*)
 		runquiet mpv -no-terminal --force-window "$1" && exit;;
 	*/x-xcf)
