@@ -1,0 +1,1 @@
+/home/cat/gitstuff/mpv-gallery-view/scripts/playlist-view.lua
