@@ -7,7 +7,6 @@ urxvtd&
 fcitx&
 sstat -d
 snotif -d
-wmname LG3D
 /home/cat/.fehbg
-xbanish -bt5000
+xbanish -t5&
 wacom_init.sh&
