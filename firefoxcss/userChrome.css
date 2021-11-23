@@ -10,6 +10,11 @@
 	--tab-min-height: 27px!important;
 }
 
+/* unbreak some ui */
+tooltip {
+	margin: 10px!important;
+}
+
 /* megabar mitigation */
 #urlbar[breakout-extend] {
 	top: calc((var(--urlbar-toolbar-height) - var(--urlbar-height)) / 2)!important;

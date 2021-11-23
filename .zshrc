@@ -46,6 +46,7 @@ wttr() { curl wttr.in/"$1" }
 mpvyt() { mpv ytdl://ytsearch66:"$*" }
 mkcd() { mkdir -p "$1";cd "$1" }
 scanwlan() { sudo iwlist wlp3s0 scanning essid $1 }
+stream2cam() { ffmpeg -stream_loop -1 -re -i $1 -f v4l2 /dev/video0 }
 
 colorsdesu() {
     T=':/3'
