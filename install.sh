@@ -59,7 +59,7 @@ ln -sfv "$DOT_DIR"/.urxvt/* ~/.urxvt
 
 sudo mkdir -p /etc/X11/xorg.conf.d
 # thinkpad/desktop specifics
-if [[ $1 == "thinkpad"]]
+if [ "$1" == "thinkpad" ]; then
 	sudo ln -sfv "$DOT_DIR"/thinkpad/xorg.conf.d/* /etc/X11/xorg.conf.d
 	sudo ln -sfv "$DOT_DIR"/thinkpad/xorg.conf.d/* /etc/X11/xorg.conf.d
 else
