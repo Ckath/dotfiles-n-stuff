@@ -4,6 +4,7 @@
 
 if [[ -z "$1" ]]; then
 	echo "usage: blog.sh post.txt [media.ext]"
+	exit 1
 fi
 
 if [[ -z "$2" ]]; then # text only post
