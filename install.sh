@@ -31,15 +31,13 @@ ln -sfv "$DOT_DIR"/.Xresources \
 mkdir ~/.weechat
 ln -sfv "$DOT_DIR"/.weechat/* ~/.weechat
 
-mkdir -p ~/.config/ranger \
-	~/.config/dunst \
+mkdir -p ~/.config/dunst \
 	~/.config/pulseaudio-ctl \
 	~/.config/networkmanager-dmenu \
 	~/.config/pulse \
 	~/.config/procps 2> /dev/null
 ln -sfv "$DOT_DIR"/.config/Trolltech.conf ~/.config
 ln -sfv "$DOT_DIR"/.config/pulseaudio-ctl/config ~/.config/pulseaudio-ctl/
-ln -sfv "$DOT_DIR"/.config/ranger/* ~/.config/ranger
 ln -sfv "$DOT_DIR"/.config/pulse/* ~/.config/pulse
 ln -sfv "$DOT_DIR"/.config/procps/* ~/.config/procps
 mkdir ~/.config/mpv 2> /dev/null || rm -rf ~/.config/mpv/scripts
