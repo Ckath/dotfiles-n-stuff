@@ -1,9 +1,7 @@
-" Plugins
 set packpath^=~/.vim
 if exists('*minpac#init')
 	call minpac#init()
 	call minpac#add('k-takata/minpac', {'type': 'opt'})
-
 	call minpac#add('airblade/vim-gitgutter')
 	call minpac#add('bling/vim-airline')
 	call minpac#add('chrisbra/Recover.vim')
@@ -18,10 +16,9 @@ if exists('*minpac#init')
 	call minpac#add('tpope/vim-surround')
 	call minpac#add('vim-syntastic/syntastic')
 endif
-
 filetype plugin on
 
-" Functions
+" functions
 function! GetBufferList()
   redir =>buflist
   silent! ls!
@@ -49,7 +46,7 @@ function! ToggleList(bufname, pfx)
   endif
 endfunction
 
-" Leader Binds
+" leader binds
 nnoremap <leader>l :bnext<cr>
 nnoremap <leader>h :bprevious<cr>
 nnoremap <leader>W :w !sudo tee % > /dev/null<cr>
@@ -84,7 +81,7 @@ nnoremap <C-W><C-j> :resize -10<cr>
 autocmd BufRead,BufNewFile *.h set filetype=c
 autocmd TerminalOpen * set nobuflisted
 
-" C snips
+" c snips
 autocmd FileType c inoremap ;for for (int i = 0; i < xxx; ++i) {<cr>}<esc>kfxcw
 autocmd FileType c inoremap ;while while () {<cr>}<esc>kf(a
 autocmd FileType c inoremap ;if if () {<cr>}<esc>kf(a
@@ -95,7 +92,7 @@ autocmd FileType c inoremap ;inc #include <stdio.h><esc>T<vt.
 autocmd FileType c inoremap ;finf for (;;) {<cr>}<esc>O
 autocmd FileType c inoremap ;def #define 
 
-" LaTeX snips
+" latex snips
 autocmd FileType tex inoremap ;doc \begin{document}<cr>\end{document}<esc>O
 autocmd FileType tex inoremap ;bf {\bf}<esc>i<space>
 autocmd FileType tex inoremap ;it {\it}<esc>i<space>
@@ -115,28 +112,27 @@ autocmd FileType tex inoremap ;hr \hline
 autocmd FileType tex inoremap ;table \begin{tabular}{ \| l \| c \| r \| }<cr>\hline<cr>\hline<cr>\end{tabular}<esc>kO
 autocmd FileType tex inoremap ;ti <space>\\ \hline<cr>
 
-" Shell snips
-autocmd FileType sh inoremap ;sh #!/bin/sh
+" shell snips autocmd FileType sh inoremap ;sh #!/bin/sh
 autocmd FileType sh inoremap ;bash #!/bin/bash
 autocmd FileType sh inoremap ;if if [ "$1" = "" ]; then<cr>fi<esc>kf[vi[
 autocmd FileType sh inoremap ;ifb if [[ "$1" = "" ]]; then<cr>fi<esc>kf[vi[
 
-" File Searching
+" file searching
 set path+=**
 set wildmenu
 set wildignorecase
 cnoremap <C-Y> <Space><BS>
 
-" Searching
+" searching
 set hlsearch
 set incsearch
 set ignorecase
 set smartcase
 
-" Backspacing
+" backspacing
 set bs=2
 
-" Tidy undo/backup/swp files
+" tidy undo/backup/swp files
 set undodir=~/.vim/.undo// 
 set backupdir=~/.vim/.backup//
 set directory=~/.vim/.swp//
@@ -144,12 +140,12 @@ set viminfo+=n~/.vim/.viminfo
 set backup
 set undofile
 
-" Highlighting/color
+" highlighting/color
 syntax on
 colorscheme undeadcate
 let g:airline_theme = 'monocate'
 
-" Indenting
+" indenting
 set ai
 set si
 set cindent
@@ -159,69 +155,51 @@ set shiftwidth=4
 set noexpandtab
 set softtabstop=4
 
-" Linenumbers
+" line numbers
 set rnu
 set nu
 set cursorline cursorlineopt=number
 
-" Tags
+" tags
 set tags+=/tmp/tags
 
-" Complete
+" complete
 set complete=.,w,b,u,t,i,kspell
 set omnifunc=syntaxcomplete#Complete
 set completefunc=syntaxcomplete#Complete
 set completeopt-=preview
 
-" Other preferable behaviour
+" other preferable behaviour
 set history=9999
 set ruler
 set showcmd
 set hidden
 
-" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
-" so that you can undo CTRL-U after inserting a line break.
+" things stolen from the default vimrc
 inoremap <C-U> <C-G>u<C-U>
-
-" In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
     set mouse=a
 endif
-
 augroup vimrcEx
 au!
-
-" For all text files set 'textwidth' to 78 characters.
 autocmd FileType text setlocal textwidth=78
-
-" When editing a file, always jump to the last known cursor position.
-" Don't do it when the position is invalid or when inside an event handler
-" (happens when dropping a file on gvim).
-" Also don't do it when the mark is in the first line, that is the default
-" position when opening a file.
 autocmd BufReadPost *
 \ if line("'\"") > 1 && line("'\"") <= line("$") |
 \   exe "normal! g`\"" |
 \ endif
-
 augroup END
-
-" Convenient command to see the difference between the current buffer and the
-" file it was loaded from, thus the changes you made.
-" Only define it when not defined already.
 if !exists(":DiffOrig")
     command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
                 \ | wincmd p | diffthis
 endif
 
-" Airline Settings
+" finally, plugin specific stuff
+" airline
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
-
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
-
 let g:airline_left_sep = ''
 let g:airline_left_alt_sep = '|'
 let g:airline_right_sep = ''
@@ -231,11 +209,11 @@ let g:airline_symbols.readonly = '[R]'
 let g:airline_symbols.linenr = ''
 let g:airline_symbols.maxlinenr = ''
 
-" Easy Allign Settings
+" easy allign
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
-" Syntastic Settings
+" syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -245,12 +223,12 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_c_checkers = ['gcc']
 
-" GitGutter Settings
+" gitgutter
 let g:gitgutter_map_keys = 0
 autocmd BufWritePost * GitGutter
 autocmd VimEnter * autocmd! gitgutter CursorHold,CursorHoldI
 
-" Clang Formatter Settings
+" clang formatter
 let g:clang_format#detect_style_file = 1
 nnoremap <buffer><leader>f :ClangFormat<cr>
 vnoremap <buffer><leader>f :ClangFormat<cr>
