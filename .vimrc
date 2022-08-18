@@ -224,10 +224,10 @@ let g:syntastic_c_checkers = ['gcc']
 
 " gitgutter
 let g:gitgutter_map_keys = 0
-autocmd BufWritePost * GitGutter
+autocmd BufWritePost,VimEnter * GitGutter
 autocmd VimEnter * autocmd! gitgutter CursorHold,CursorHoldI
 
 " clang formatter
 let g:clang_format#detect_style_file = 1
 nnoremap <buffer><leader>f :ClangFormat<cr>
-vnoremap <buffer><leader>f :ClangFormat<cr>
+noremap <buffer><leader>f :ClangFormat<cr>
