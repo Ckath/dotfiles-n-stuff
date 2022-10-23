@@ -12,7 +12,7 @@ case $(file --mime-type -Lb "$1") in
 	image/*)
 		runquiet mpv --loop-file=inf --no-terminal "$1" && exit;;
 	*/pdf)
-		runquiet zathura "$1" && exit;;
+		runquiet firefox "$1" && exit;;
 esac
 
 # special case for 'last Q' mpv playlist markers
