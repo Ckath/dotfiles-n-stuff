@@ -28,16 +28,13 @@
     browser = /usr/bin/firefox -new-tab
     icon_position = off
     icon_folders = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
-
-[frame]
-    width = 2
-    color = "__BG"
-
-[shortcuts]
+    frame_width = 2
+    frame_color = "__BG"
     close = ctrl+space
     close_all = ctrl+shift+space
     history = ctrl+grave
     context = ctrl+shift+period
+	offset = 1x16
 
 [urgency_low]
     background = "__BG"
