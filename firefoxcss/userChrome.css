@@ -8,6 +8,7 @@
 	scrollbar-width: none!important;
 	--toolbarbutton-inner-padding: 0px!important;
 	--tab-min-height: 27px!important;
+	--urlbar-toolbar-height: 27px!important;
 }
 
 /* unbreak some ui */
