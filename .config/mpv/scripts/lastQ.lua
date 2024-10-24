@@ -4,7 +4,7 @@
 -- (c) Ckat 03-01-2018
 
 function update_lastQ()
-    f = io.open(mp.get_property("working-directory") .. "/!lastQ", "w")
+    f = io.open(mp.get_property("working-directory") .. "/!lastQ.m3u", "w")
     io.output(f)
     io.write(mp.get_property("filename"))
     io.close(f)
