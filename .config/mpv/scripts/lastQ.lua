@@ -1,4 +1,4 @@
--- saves 'last Quited' filename to a !lastQ file in your current directory,
+-- saves 'last Quited' filename to a !lastQ.m3u file in your current directory,
 -- useful for keeping track of what episode you were at with a show
 --
 -- (c) Ckat 03-01-2018
