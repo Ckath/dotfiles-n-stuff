@@ -7,8 +7,8 @@
 	padding-bottom: 0px!important;
 	scrollbar-width: none!important;
 	--toolbarbutton-inner-padding: 0px!important;
-	--tab-min-height: 27px!important;
-	--urlbar-toolbar-height: 27px!important;
+	--tab-min-height: 20px!important;
+	--urlbar-toolbar-height: 85px!important;
 }
 
 /* unbreak some ui */
