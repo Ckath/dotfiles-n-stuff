@@ -25,3 +25,8 @@ tooltip {
 #urlbar[breakout-extend] #urlbar-input-container { height: var(--urlbar-height)!important; padding:0px!important; }
 .urlbarView { margin: 0px!important; width: 100%!important; }
 .urlbarView-row { padding: 0px!important; }
+
+/* they broke just hide them */
+.tabbrowser-tab .tab-close-button {
+	visibility: collapse !important;
+}
