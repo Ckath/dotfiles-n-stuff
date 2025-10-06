@@ -41,6 +41,9 @@ alias pacccache="paccache -rk2 && paccache -ruk0"
 alias lidignore="systemd-inhibit --what=handle-lid-switch sleep 666d"
 alias pakkuscuffedgitupdate="pakku -S --needed \$(pakku -Qq | grep \"\-git\")"
 alias xkill="kill -9 \$(xprop | grep _NET_WM_PID | sed 's/_NET.*\=\ //')"
+alias hisres="fc -W .zsh_history_mem"
+alias scuffsh="ssh -oPubkeyAcceptedKeyTypes=+ssh-rsa -oHostKeyAlgorithms=+ssh-rsa -oKexAlgorithms=+diffie-hellman-group1-sha1 -oCiphers=+aes128-cbc"
+alias scuffcp="scp -oPubkeyAcceptedKeyTypes=+ssh-rsa -oHostKeyAlgorithms=+ssh-rsa -oKexAlgorithms=+diffie-hellman-group1-sha1 -oCiphers=+aes128-cbc"
 
 wttr() { curl wttr.in/"$1" }
 mpvyt() { mpv ytdl://ytsearch66:"$*" }
