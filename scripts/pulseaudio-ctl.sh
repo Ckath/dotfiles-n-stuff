@@ -32,9 +32,9 @@ command -v pactl >/dev/null 2>&1 || {
 echo "I require pactl but it's not installed. Aborting." >&2
 exit 1; }
 
-command -v pacmd >/dev/null 2>&1 || {
-echo "I require pacmd but it's not installed. Aborting." >&2
-exit 1; }
+# command -v pacmd >/dev/null 2>&1 || {
+# echo "I require pacmd but it's not installed. Aborting." >&2
+# exit 1; }
 
 # really crude pactl version check since commands are different for different
 # versions of pactl. sorry users of PA <5
@@ -151,8 +151,10 @@ refreshbarvolperc() {
 }
 
 setup() {
-  SINK=$(pacmd list-sinks|awk '/\* index:/{ print $3 }')
-  SOURCE=$(pacmd list-sources|awk '/\* index:/{ print $3 }')
+  # SINK=$(pacmd list-sinks|awk '/\* index:/{ print $3 }')
+  SINK="alsa_output.usb-ASUSTeK_Xonar_SoundCard-00.iec958-stereo"
+  # SOURCE=$(pacmd list-sources|awk '/\* index:/{ print $3 }')
+  SOURCE="alsa_input.usb-RODE_Microphones_RODE_NT-USB-00.analog-stereo"
   MUTED=$(pacmd list-sinks|grep -A 15 '* index'|awk '/muted:/{ print $2 }')
   SOURCE_MUTED=$(pacmd list-sources|grep -A 15 '* index'|awk '/muted:/{ print $2 }')
   
